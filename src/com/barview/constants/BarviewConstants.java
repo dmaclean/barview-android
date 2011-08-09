@@ -10,4 +10,13 @@ public class BarviewConstants {
 	public static final String FAVORITE_BAR_ID		= "bar_id";
 	public static final String FAVORITE_ADDRESS		= "address";
 	public static final String FAVORITE_NAME		= "name";
+	
+	// BarImage constants for the XML
+	public static final String BARIMAGE_AGGREGATE	= "barimage";
+	public static final String BARIMAGE_BAR_ID		= "bar_id";
+	public static final String BARIMAGE_IMAGE		= "image";
+	
+	// Extras parameters
+	public static final String BAR_ID				= "bar_id";
+	public static final String BAR_NAME				= "bar_name";
 }

@@ -10,6 +10,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.barview.constants.BarviewConstants;
@@ -31,19 +30,26 @@ public class FavoritesActivity extends ListActivity {
 	
 	static ArrayList<Favorite> favorites;
 	
+	private ArrayList<String> barIds;
+	
+	FavoritesActivity favoritesClass = this;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		favorites = new ArrayList<Favorite>();
+		barIds = new ArrayList<String>();
 		
 		ListView lv = (ListView) getListView();
 		lv.setTextFilterEnabled(true);
 		
 		lv.setOnItemClickListener(new OnItemClickListener() {
 		    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		      // When clicked, show a toast with the TextView text
-		    	Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-		    	Toast.LENGTH_SHORT).show();
+		    	Intent intent = new Intent(favoritesClass, DetailActivity.class);
+		    	intent.putExtra(BarviewConstants.BAR_ID, favorites.get(position).getBarId());
+		    	intent.putExtra(BarviewConstants.BAR_NAME, favorites.get(position).getBarName());
+		    	
+		    	startActivity(intent);
 		    }
 		});
 	}
@@ -55,16 +61,12 @@ public class FavoritesActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		
+		Log.i("FavoritesActivity", "in onResume");
+		
 		FavoriteFetcher ff = new FavoriteFetcher();
 		ff.execute("dmac");
 		
-		String[] favesArray = new String[favorites.size()];
-		int i= 0;
-		for(Favorite f : favorites)
-			favesArray[i++] = f.getBarName();
-			
 		
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, favesArray));
 	}
 	
 	
@@ -116,14 +118,27 @@ public class FavoritesActivity extends ListActivity {
 	            setFavorites(           myExampleHandler.getParsedFavorites());
 			}
 			catch(Exception e) {
-				Log.e("doInBackground", e.getMessage());
+				Log.e("doInBackground", "An error occurred: " + e.getMessage());
 			}
 			
 			return response;
 		}
 		
 		protected void onPostExecute(String result) {
+			// Clear out the bar ids because we have a new list
+			barIds.clear();
 			
+			String[] favesArray = new String[favorites.size()];
+			int i= 0;
+			for(Favorite f : favorites) {
+				favesArray[i++] = f.getBarName();
+				Log.i("FavoritesActivity", "Added favorite - " + f.getBarName());
+				
+				barIds.add(f.getBarId());
+			}
+				
+			
+			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
 		}
 	}
 }

@@ -19,6 +19,10 @@
         <activity 	android:name="FavoritesActivity" 
         			android:icon="@drawable/icon" 
         			android:label="@string/favoritesTitle"></activity>
+        
+        <activity 	android:name="DetailActivity"></activity>
+        
+        <activity 	android:name="MapLookupActivity"></activity>
 		
     </application>
 </manifest>
