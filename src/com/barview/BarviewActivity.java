@@ -29,5 +29,14 @@ public class BarviewActivity extends TabActivity {
         				.setContent(intent);
         
         tabHost.addTab(spec);
+        
+        intent = new Intent().setClass(this, MapLookupActivity.class);
+    
+        // Initialize a TabSpec for each tab and add it to the TabHost
+        spec = tabHost.newTabSpec("maplookup")
+        				.setIndicator("Bar Lookup", resources.getDrawable(R.drawable.ic_tab_favorites))
+        				.setContent(intent);
+        
+        tabHost.addTab(spec);
     }
 }

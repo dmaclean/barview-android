@@ -5,4 +5,6 @@
     
     <!-- Favorites -->
     <string name="favoritesTitle">Favorites</string>
+    
+    <string name="searchButton">Search</string>
 </resources>
