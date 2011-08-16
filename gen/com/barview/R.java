@@ -39,7 +39,10 @@ public final class R {
         /**  Favorites 
          */
         public static final int favoritesTitle=0x7f040002;
+        public static final int goToImage=0x7f040004;
         public static final int hello=0x7f040000;
+        /**  Bar Lookup 
+         */
         public static final int searchButton=0x7f040003;
     }
 }

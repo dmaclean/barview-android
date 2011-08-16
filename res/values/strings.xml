@@ -6,5 +6,8 @@
     <!-- Favorites -->
     <string name="favoritesTitle">Favorites</string>
     
+    <!-- Bar Lookup -->
     <string name="searchButton">Search</string>
+    <string name="goToImage">View Feed</string>
+    
 </resources>

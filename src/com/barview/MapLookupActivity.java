@@ -224,6 +224,9 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 				
 		        Drawable drawable = me.getResources().getDrawable(R.drawable.icon);
 		        CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, me);
+//		        itemizedOverlay.setImageView(findViewById(R.layout.detail));
+//		        itemizedOverlay.setMap((MapView) findViewById(R.id.mapview));
+		        itemizedOverlay.setBarId(b.getBarId());
 		        
 		        // The Bar object already has lat/lng set up with GeoPoint precision - no need to multiply.
 		        GeoPoint point = new GeoPoint((int)b.getLat(), (int)b.getLng());
