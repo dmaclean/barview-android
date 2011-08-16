@@ -10,4 +10,7 @@
     <string name="searchButton">Search</string>
     <string name="goToImage">View Feed</string>
     
+    <!-- Details -->
+    <string name="addToFaves">Add to Faves</string>
+    
 </resources>
