@@ -23,18 +23,35 @@ public class BarviewActivity extends TabActivity {
         // Create an Intent to launch an Activity for the tab (to be reused)
         intent = new Intent().setClass(this, FavoritesActivity.class);
         
-        // Initialize a TabSpec for each tab and add it to the TabHost
+        /*
+         * Create a tab for the Favorites activity
+         */
         spec = tabHost.newTabSpec("favorites")
         				.setIndicator("Favorites", resources.getDrawable(R.drawable.ic_tab_favorites))
         				.setContent(intent);
         
         tabHost.addTab(spec);
         
-        intent = new Intent().setClass(this, MapLookupActivity.class);
+        
     
-        // Initialize a TabSpec for each tab and add it to the TabHost
+        /*
+         * Create a tab for the Bar Lookup activity
+         */
+        intent = new Intent().setClass(this, MapLookupActivity.class);
         spec = tabHost.newTabSpec("maplookup")
         				.setIndicator("Bar Lookup", resources.getDrawable(R.drawable.ic_tab_favorites))
+        				.setContent(intent);
+        
+        tabHost.addTab(spec);
+        
+        
+        
+        /*
+         * Create a tab for the Current Location activity
+         */
+        intent = new Intent().setClass(this, CurrentLocationActivity.class);
+        spec = tabHost.newTabSpec("currentlocation")
+        				.setIndicator("Current Location", resources.getDrawable(R.drawable.ic_tab_favorites))
         				.setContent(intent);
         
         tabHost.addTab(spec);

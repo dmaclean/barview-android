@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+	<com.google.android.maps.MapView
+        android:id="@+id/currloc_mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:apiKey="0_5PS4CaCXxThNkB5PrBpGn3pvHgy_-MXzni20g"/>
+<!-- 25:23:AA:81:52:A1:C9:04:39:70:BC:C6:05:47:78:6E -->
+    
+</LinearLayout>
