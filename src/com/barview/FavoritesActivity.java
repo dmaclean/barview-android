@@ -10,23 +10,17 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.barview.adapters.FavoriteAdapter;
 import com.barview.constants.BarviewConstants;
-import com.barview.listeners.FavoriteDeleteOnClickListener;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
@@ -62,6 +56,7 @@ public class FavoritesActivity extends ListActivity {
 		});
 		
 		this.m_adapter = new FavoriteAdapter(this, R.layout.row, favorites);
+		this.m_adapter.setBarIds(barIds);
         setListAdapter(this.m_adapter);
 	}
 	
@@ -158,43 +153,43 @@ public class FavoritesActivity extends ListActivity {
 	 * @author dmaclean
 	 *
 	 */
-	public class FavoriteAdapter extends ArrayAdapter<Favorite> {
-
-		private ArrayList<Favorite> items;
-		
-		private Context context;
-
-		public FavoriteAdapter(Context context, int textViewResourceId, ArrayList<Favorite> items) {
-			super(context, textViewResourceId, items);
-			this.items = items;
-			this.context = context;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if (v == null) {
-				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.row, null);
-			}
-			Favorite o = items.get(position);
-			if (o != null) {
-				TextView tt = (TextView) v.findViewById(R.id.toptext);
-//				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
-				
-				if (tt != null) {
-					tt.setText(o.getBarName());
-				}
-//				if(bt != null) {
-//					bt.setText("Status: "+ o.getAddress());
+//	public class FavoriteAdapter extends ArrayAdapter<Favorite> {
+//
+//		private ArrayList<Favorite> items;
+//		
+//		private Context context;
+//
+//		public FavoriteAdapter(Context context, int textViewResourceId, ArrayList<Favorite> items) {
+//			super(context, textViewResourceId, items);
+//			this.items = items;
+//			this.context = context;
+//		}
+//
+//		@Override
+//		public View getView(int position, View convertView, ViewGroup parent) {
+//			View v = convertView;
+//			if (v == null) {
+//				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//				v = vi.inflate(R.layout.row, null);
+//			}
+//			Favorite o = items.get(position);
+//			if (o != null) {
+//				TextView tt = (TextView) v.findViewById(R.id.toptext);
+////				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
+//				
+//				if (tt != null) {
+//					tt.setText(o.getBarName());
 //				}
-				
-				Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
-				FavoriteDeleteOnClickListener listener = 
-						new FavoriteDeleteOnClickListener(context, position, items, barIds, m_adapter);
-				delete.setOnClickListener(listener);
-			}
-			return v;
-		}
-	}
+////				if(bt != null) {
+////					bt.setText("Status: "+ o.getAddress());
+////				}
+//				
+//				Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
+////				FavoriteDeleteOnClickListener listener = 
+////						new FavoriteDeleteOnClickListener(context, position, items, barIds, m_adapter);
+////				delete.setOnClickListener(listener);
+//			}
+//			return v;
+//		}
+//	}
 }

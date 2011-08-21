@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.barview.FavoritesActivity.FavoriteAdapter;
+import com.barview.adapters.FavoriteAdapter;
 import com.barview.models.Favorite;
 import com.barview.rest.FavoriteDeleter;
 
