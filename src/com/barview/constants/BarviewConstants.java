@@ -2,6 +2,7 @@ package com.barview.constants;
 
 public class BarviewConstants {
 	public static final String FAVORITES_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/favorites";
+	public static final String FAVORITE_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/favorite";		// For POST and DELETE
 	public static final String BARIMAGES_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/barimage";
 	public static final String NEARBYBARS_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/nearbybars";
 	
@@ -23,6 +24,9 @@ public class BarviewConstants {
 	public static final String NEARBY_BAR_ADDRESS	= "address";
 	public static final String NEARBY_BAR_LAT		= "lat";
 	public static final String NEARBY_BAR_LNG		= "lng";
+	
+	// REST stuff
+	public static final String REST_USER_ID			= "User_id";
 	
 	// Extras parameters
 	public static final String BAR_ID				= "bar_id";

@@ -10,17 +10,23 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.barview.constants.BarviewConstants;
+import com.barview.listeners.FavoriteDeleteOnClickListener;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
@@ -33,6 +39,8 @@ public class FavoritesActivity extends ListActivity {
 	private ArrayList<String> barIds;
 	
 	FavoritesActivity favoritesClass = this;
+	
+	private FavoriteAdapter m_adapter;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +60,9 @@ public class FavoritesActivity extends ListActivity {
 		    	startActivity(intent);
 		    }
 		});
+		
+		this.m_adapter = new FavoriteAdapter(this, R.layout.row, favorites);
+        setListAdapter(this.m_adapter);
 	}
 	
 	/**
@@ -127,18 +138,63 @@ public class FavoritesActivity extends ListActivity {
 		protected void onPostExecute(String result) {
 			// Clear out the bar ids because we have a new list
 			barIds.clear();
+			m_adapter.clear();
 			
-			String[] favesArray = new String[favorites.size()];
-			int i= 0;
 			for(Favorite f : favorites) {
-				favesArray[i++] = f.getBarName();
 				Log.i("FavoritesActivity", "Added favorite - " + f.getBarName());
 				
 				barIds.add(f.getBarId());
+				m_adapter.add(f);
 			}
-				
 			
-			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
+			m_adapter.notifyDataSetChanged();
+		}
+	}
+	
+	/**
+	 * A customized adapter for the favorites list.  This helps facilitate a custom view
+	 * for each row.
+	 * 
+	 * @author dmaclean
+	 *
+	 */
+	public class FavoriteAdapter extends ArrayAdapter<Favorite> {
+
+		private ArrayList<Favorite> items;
+		
+		private Context context;
+
+		public FavoriteAdapter(Context context, int textViewResourceId, ArrayList<Favorite> items) {
+			super(context, textViewResourceId, items);
+			this.items = items;
+			this.context = context;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(R.layout.row, null);
+			}
+			Favorite o = items.get(position);
+			if (o != null) {
+				TextView tt = (TextView) v.findViewById(R.id.toptext);
+//				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
+				
+				if (tt != null) {
+					tt.setText(o.getBarName());
+				}
+//				if(bt != null) {
+//					bt.setText("Status: "+ o.getAddress());
+//				}
+				
+				Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
+				FavoriteDeleteOnClickListener listener = 
+						new FavoriteDeleteOnClickListener(context, position, items, barIds, m_adapter);
+				delete.setOnClickListener(listener);
+			}
+			return v;
 		}
 	}
 }

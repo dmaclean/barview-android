@@ -5,6 +5,7 @@
     
     <!-- Favorites -->
     <string name="favoritesTitle">Favorites</string>
+    <string name="deleteButton">Delete</string>
     
     <!-- Bar Lookup -->
     <string name="searchButton">Search</string>
@@ -12,5 +13,9 @@
     
     <!-- Details -->
     <string name="addToFaves">Add to Faves</string>
+    
+    <!-- Facebook -->
+    <string name="login">Log in</string>
+    <string name="logout">Log out</string>
     
 </resources>
