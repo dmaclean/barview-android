@@ -17,7 +17,7 @@ import com.barview.models.Favorite;
 public class FavoriteAdapter extends ArrayAdapter<Favorite> {
 	private ArrayList<Favorite> items;
 	
-	private ArrayList<String> barIds;
+	private static ArrayList<String> barIds;
 	
 	private Context context;
 
@@ -36,17 +36,21 @@ public class FavoriteAdapter extends ArrayAdapter<Favorite> {
 		}
 		Favorite o = items.get(position);
 		if (o != null) {
-			TextView tt = (TextView) v.findViewById(R.id.toptext);
+//			TextView tt = (TextView) v.findViewById(R.id.toptext);
+//			
+//			if (tt != null) {
+//				tt.setText(o.getBarName());
+//			}
 			
-			if (tt != null) {
-				tt.setText(o.getBarName());
-			}
-			
-			Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
-			FavoriteDeleteOnClickListener listener = new FavoriteDeleteOnClickListener(context, position, items, barIds, this);
-			delete.setOnClickListener(listener);
+//			Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
+//			FavoriteDeleteOnClickListener listener = new FavoriteDeleteOnClickListener(context, position, items, barIds, this);
+//			delete.setOnClickListener(listener);
 		}
 		return v;
+	}
+	
+	public static boolean isFavorite(String barId) {
+		return barIds.contains(barId);
 	}
 
 	public void setBarIds(ArrayList<String> barIds) {

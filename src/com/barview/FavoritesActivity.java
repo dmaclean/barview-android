@@ -9,6 +9,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,11 +17,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.barview.adapters.FavoriteAdapter;
 import com.barview.constants.BarviewConstants;
+import com.barview.listeners.FavoriteDelete2OnClickListener;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
@@ -30,7 +35,7 @@ public class FavoritesActivity extends ListActivity {
 	
 	static ArrayList<Favorite> favorites;
 	
-	private ArrayList<String> barIds;
+	private static ArrayList<String> barIds;
 	
 	FavoritesActivity favoritesClass = this;
 	
@@ -45,6 +50,9 @@ public class FavoritesActivity extends ListActivity {
 		ListView lv = (ListView) getListView();
 		lv.setTextFilterEnabled(true);
 		
+		/*
+		 * Set up the OnItemClickListener to launch the Details activity when a row is clicked.
+		 */
 		lv.setOnItemClickListener(new OnItemClickListener() {
 		    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		    	Intent intent = new Intent(favoritesClass, DetailActivity.class);
@@ -55,9 +63,33 @@ public class FavoritesActivity extends ListActivity {
 		    }
 		});
 		
-		this.m_adapter = new FavoriteAdapter(this, R.layout.row, favorites);
-		this.m_adapter.setBarIds(barIds);
-        setListAdapter(this.m_adapter);
+		/*
+		 * Set up the OnItemLongClickListener to launch a dialog window prompting the user
+		 * to delete the favorite if they want.
+		 */
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				Favorite f = favorites.get(position);
+				
+				// This listener is a disaster.  I'm passing all sorts of shit into it, but I can't think of a 
+				// better way to update the interface and maintain the data structures.
+				FavoriteDelete2OnClickListener listener = new FavoriteDelete2OnClickListener(parent.getContext(), position, favorites, barIds, favoritesClass);
+				
+				AlertDialog.Builder dialog = new AlertDialog.Builder(parent.getContext());
+				dialog.setTitle("Delete " + f.getBarName() + " from favorites?");
+				dialog.setPositiveButton("YES", listener);
+				dialog.setNegativeButton("NO", listener);
+				dialog.show();
+				
+				return true;
+			}
+			
+		});
+		
+//		this.m_adapter = new FavoriteAdapter(this, R.layout.row, favorites);
+//		this.m_adapter.setBarIds(barIds);
+//        setListAdapter(this.m_adapter);
 	}
 	
 	/**
@@ -78,6 +110,10 @@ public class FavoritesActivity extends ListActivity {
 	
 	protected void setFavorites(ArrayList<Favorite> f) {
 		favorites = f;
+	}
+	
+	public static boolean isFavorite(String barId) {
+		return barIds.contains(barId);
 	}
 	
 	/**
@@ -133,63 +169,20 @@ public class FavoritesActivity extends ListActivity {
 		protected void onPostExecute(String result) {
 			// Clear out the bar ids because we have a new list
 			barIds.clear();
-			m_adapter.clear();
+//			m_adapter.clear();
 			
+			String[] favesArray = new String[favorites.size()];
+			int i= 0;
 			for(Favorite f : favorites) {
+				favesArray[i++] = f.getBarName();
 				Log.i("FavoritesActivity", "Added favorite - " + f.getBarName());
 				
 				barIds.add(f.getBarId());
-				m_adapter.add(f);
+//				m_adapter.add(f);
 			}
 			
-			m_adapter.notifyDataSetChanged();
+//			m_adapter.notifyDataSetChanged();
+			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
 		}
 	}
-	
-	/**
-	 * A customized adapter for the favorites list.  This helps facilitate a custom view
-	 * for each row.
-	 * 
-	 * @author dmaclean
-	 *
-	 */
-//	public class FavoriteAdapter extends ArrayAdapter<Favorite> {
-//
-//		private ArrayList<Favorite> items;
-//		
-//		private Context context;
-//
-//		public FavoriteAdapter(Context context, int textViewResourceId, ArrayList<Favorite> items) {
-//			super(context, textViewResourceId, items);
-//			this.items = items;
-//			this.context = context;
-//		}
-//
-//		@Override
-//		public View getView(int position, View convertView, ViewGroup parent) {
-//			View v = convertView;
-//			if (v == null) {
-//				LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//				v = vi.inflate(R.layout.row, null);
-//			}
-//			Favorite o = items.get(position);
-//			if (o != null) {
-//				TextView tt = (TextView) v.findViewById(R.id.toptext);
-////				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
-//				
-//				if (tt != null) {
-//					tt.setText(o.getBarName());
-//				}
-////				if(bt != null) {
-////					bt.setText("Status: "+ o.getAddress());
-////				}
-//				
-//				Button delete = (Button) v.findViewById(R.id.favesDeleteButton);
-////				FavoriteDeleteOnClickListener listener = 
-////						new FavoriteDeleteOnClickListener(context, position, items, barIds, m_adapter);
-////				delete.setOnClickListener(listener);
-//			}
-//			return v;
-//		}
-//	}
 }

@@ -1,10 +1,12 @@
 package com.barview.constants;
 
 public class BarviewConstants {
-	public static final String FAVORITES_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/favorites";
-	public static final String FAVORITE_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/favorite";		// For POST and DELETE
-	public static final String BARIMAGES_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/barimage";
-	public static final String NEARBYBARS_URL_DEV = "http://new-host.home:8888/barview/index.php?/rest/nearbybars";
+	public static final String LOCALHOST			= "10.0.2.2";
+	
+	public static final String FAVORITES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorites";
+	public static final String FAVORITE_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorite";		// For POST and DELETE
+	public static final String BARIMAGES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/barimage";
+	public static final String NEARBYBARS_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/nearbybars";
 	
 	// Favorite constants for the XML
 	public static final String FAVORITE_AGGREGATE	= "favorite";
