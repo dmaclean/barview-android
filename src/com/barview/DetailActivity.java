@@ -15,13 +15,18 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barview.constants.BarviewConstants;
 import com.barview.models.BarImage;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
+import com.barview.utilities.BarviewUtilities;
 import com.barview.xml.BarImageXMLHandler;
 
 public class DetailActivity extends Activity {
@@ -29,6 +34,10 @@ public class DetailActivity extends Activity {
 	private BarImage barImage;
 	
 	private ImageView imageView;
+	
+	private Button favesButton;
+	
+	private DetailActivity me = this;
 	
 	private String barId;
 	private String barName;
@@ -47,6 +56,49 @@ public class DetailActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		barId = extras.getString(BarviewConstants.BAR_ID);
 		barName = extras.getString(BarviewConstants.BAR_NAME);
+		
+		/*
+		 * We don't want the "Add to Favorites" button to be visible if
+		 * this bar is already a favorite.
+		 */
+		favesButton = (Button) findViewById(R.id.button1);
+		if(FavoritesActivity.isFavorite(barId))
+			favesButton.setVisibility(View.INVISIBLE);
+		
+		/*
+		 * Create an OnClickListener for the "Add to Favorites" button so
+		 * it calls out to the REST service and adds this bar as a favorite
+		 * for the logged-in user.
+		 */
+		favesButton.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				RestClient client = new RestClient(BarviewUtilities.getFavoriteURLForRunMode() + "/" + barId);
+				client.AddHeader("User_id", "dmac");
+				
+				try {
+					client.Execute(RequestMethod.POST);
+					String response = client.getResponse();
+					
+					/*
+					 * The POST call for the favorites service should return an empty response to
+					 * us indicating success.  If we get something back in the response (HTML for
+					 * a PHP error) then we know the call failed.  Either way, we will fill in the
+					 * Toast accordingly based on the response.
+					 */
+					Toast toast;
+					if(!response.equals(""))
+						toast = Toast.makeText(me, "Unable to add " + barName + " to favorites.  Please try again later.", Toast.LENGTH_SHORT);
+					else
+						toast = Toast.makeText(me, "Added " + barName + " to favorites!", Toast.LENGTH_SHORT);
+					
+					toast.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		});
 		
 		TextView tv = (TextView) findViewById(R.id.detailTitle);
 		tv.setText(barName);
@@ -70,7 +122,7 @@ public class DetailActivity extends Activity {
 		
 		@Override
 		protected String doInBackground(String... params) {
-			RestClient client = new RestClient(BarviewConstants.BARIMAGES_URL_DEV + "/" + params[0]);
+			RestClient client = new RestClient(BarviewUtilities.getBarImageURLForRunMode() + "/" + params[0]);
 			
 			try {
 				client.Execute(RequestMethod.GET);
