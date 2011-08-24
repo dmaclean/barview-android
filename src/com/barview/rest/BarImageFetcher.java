@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.barview.constants.BarviewConstants;
 import com.barview.models.BarImage;
 import com.barview.rest.RestClient.RequestMethod;
+import com.barview.utilities.BarviewUtilities;
 import com.barview.xml.BarImageXMLHandler;
 
 public class BarImageFetcher extends AsyncTask<String, Integer, String> {
@@ -30,7 +31,7 @@ public class BarImageFetcher extends AsyncTask<String, Integer, String> {
 	
 	@Override
 	protected String doInBackground(String... params) {
-		RestClient client = new RestClient(BarviewConstants.BARIMAGES_URL_DEV + "/" + params[0]);
+		RestClient client = new RestClient(BarviewUtilities.getBarImageURLForRunMode() + "/" + params[0]);
 		
 		try {
 			client.Execute(RequestMethod.GET);

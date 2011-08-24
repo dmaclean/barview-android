@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.barview.constants.BarviewConstants;
 import com.barview.rest.RestClient.RequestMethod;
+import com.barview.utilities.BarviewUtilities;
 
 public class FavoriteDeleter extends AsyncTask<String, Integer, String> {
 	
@@ -14,7 +15,7 @@ public class FavoriteDeleter extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected String doInBackground(String... params) {
-		RestClient client = new RestClient(BarviewConstants.FAVORITE_URL_DEV + "/" + params[0]);
+		RestClient client = new RestClient(BarviewUtilities.getFavoriteURLForRunMode() + "/" + params[0]);
 		client.AddHeader(BarviewConstants.REST_USER_ID, "dmac");
 		
 		try {

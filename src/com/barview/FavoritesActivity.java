@@ -29,6 +29,7 @@ import com.barview.listeners.FavoriteDelete2OnClickListener;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
+import com.barview.utilities.BarviewUtilities;
 import com.barview.xml.XMLHandler;
 
 public class FavoritesActivity extends ListActivity {
@@ -131,7 +132,7 @@ public class FavoritesActivity extends ListActivity {
 		
 		@Override
 		protected String doInBackground(String... params) {
-			RestClient client = new RestClient(BarviewConstants.FAVORITES_URL_DEV);
+			RestClient client = new RestClient(BarviewUtilities.getFavoritesURLForRunMode());
 			client.AddHeader("User_id", "dmac");
 			
 			try {

@@ -20,6 +20,7 @@ import com.barview.constants.BarviewConstants;
 import com.barview.map.overlay.CustomItemizedOverlay;
 import com.barview.models.Bar;
 import com.barview.rest.RestClient.RequestMethod;
+import com.barview.utilities.BarviewUtilities;
 import com.barview.xml.NearbyBarXMLHandler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -87,7 +88,7 @@ public class NearbyBarFetcher extends AsyncTask<Double, Integer, String> {
 		lat = params[0];
 		lng = params[1];
 		
-		RestClient client = new RestClient(BarviewConstants.NEARBYBARS_URL_DEV);
+		RestClient client = new RestClient(BarviewUtilities.getNearbyBarsURLForRunMode());
 		client.AddHeader("Latitude", String.valueOf(params[0]));
 		client.AddHeader("Longitude", String.valueOf(params[1]));
 		
