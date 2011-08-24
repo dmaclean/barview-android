@@ -17,19 +17,23 @@ public class XMLHandler extends DefaultHandler {
 	Favorite currFave;
 	
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+		String element = (qName.equals("")) ? localName : qName;
+		
 		// We've reached the opening tag for a favorite aggregate.  (Re)initialize the Favorite object.
-		if(qName.equals(BarviewConstants.FAVORITE_AGGREGATE))
+		if(element.equals(BarviewConstants.FAVORITE_AGGREGATE))
 			currFave = new Favorite();
 	}
 	
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-		if(qName.equals(BarviewConstants.FAVORITE_AGGREGATE))
+		String element = (qName.equals("")) ? localName : qName;
+		
+		if(element.equals(BarviewConstants.FAVORITE_AGGREGATE))
 			favorites.add(currFave);
-		else if(qName.equals(BarviewConstants.FAVORITE_BAR_ID))
+		else if(element.equals(BarviewConstants.FAVORITE_BAR_ID))
 			currFave.setBarId(text);
-		else if(qName.equals(BarviewConstants.FAVORITE_NAME))
+		else if(element.equals(BarviewConstants.FAVORITE_NAME))
 			currFave.setBarName(text);
-		else if(qName.equals(BarviewConstants.FAVORITE_ADDRESS))
+		else if(element.equals(BarviewConstants.FAVORITE_ADDRESS))
 			currFave.setAddress(text);
 		
 		text = "";

@@ -19,22 +19,25 @@ public class NearbyBarXMLHandler extends DefaultHandler {
 	}
 	
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-		if(qName.equals(BarviewConstants.NEARBY_BAR_AGGREGATE))
+		String element = (qName.equals("")) ? localName : qName;
+		if(element.equals(BarviewConstants.NEARBY_BAR_AGGREGATE))
 			bar = new Bar();
 	}
 	
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-		if(qName.equals(BarviewConstants.NEARBY_BAR_ID))
+		String element = (qName.equals("")) ? localName : qName;
+		
+		if(element.equals(BarviewConstants.NEARBY_BAR_ID))
 			bar.setBarId(text);
-		else if(qName.equals(BarviewConstants.NEARBY_BAR_NAME))
+		else if(element.equals(BarviewConstants.NEARBY_BAR_NAME))
 			bar.setName(text);
-		else if(qName.equals(BarviewConstants.NEARBY_BAR_ADDRESS))
+		else if(element.equals(BarviewConstants.NEARBY_BAR_ADDRESS))
 			bar.setAddress(text);
-		else if(qName.equals(BarviewConstants.NEARBY_BAR_LAT))
+		else if(element.equals(BarviewConstants.NEARBY_BAR_LAT))
 			bar.setLat(Double.parseDouble(text)*BarviewConstants.GEOPOINT_MULT);
-		else if(qName.equals(BarviewConstants.NEARBY_BAR_LNG))
+		else if(element.equals(BarviewConstants.NEARBY_BAR_LNG))
 			bar.setLng(Double.parseDouble(text)*BarviewConstants.GEOPOINT_MULT);
-		else if(qName.equals(BarviewConstants.NEARBY_BAR_AGGREGATE))
+		else if(element.equals(BarviewConstants.NEARBY_BAR_AGGREGATE))
 			bars.add(bar);
 		
 		text = "";

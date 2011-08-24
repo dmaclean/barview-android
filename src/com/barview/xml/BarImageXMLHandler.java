@@ -14,14 +14,18 @@ public class BarImageXMLHandler extends DefaultHandler {
 	private BarImage barImage;
 	
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-		if(qName.equals(BarviewConstants.BARIMAGE_AGGREGATE))
+		String element = (qName.equals("")) ? localName : qName;
+		
+		if(element.equals(BarviewConstants.BARIMAGE_AGGREGATE))
 			barImage = new BarImage();
 	}
 	
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-		if(qName.equals(BarviewConstants.BARIMAGE_BAR_ID))
+		String element = (qName.equals("")) ? localName : qName;
+		
+		if(element.equals(BarviewConstants.BARIMAGE_BAR_ID))
 			barImage.setBarId(text);
-		else if(qName.equals(BarviewConstants.BARIMAGE_IMAGE))
+		else if(element.equals(BarviewConstants.BARIMAGE_IMAGE))
 			barImage.setBarImageBytes(Base64.decode(text, Base64.DEFAULT));
 		
 		text = "";
