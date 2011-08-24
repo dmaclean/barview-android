@@ -3,10 +3,22 @@ package com.barview.constants;
 public class BarviewConstants {
 	public static final String LOCALHOST			= "10.0.2.2";
 	
+	public static final String FACEBOOK_APP_ID_DEV	= "177771455596726";
+	public static final String FACEBOOK_APP_ID		= "177771455596726";
+	
+	public static final String DEV_MODE				= "DEV";
+	public static final String PROD_MODE			= "PROD";
+	public static final String RUN_MODE				= DEV_MODE;
+	
 	public static final String FAVORITES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorites";
 	public static final String FAVORITE_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorite";		// For POST and DELETE
 	public static final String BARIMAGES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/barimage";
 	public static final String NEARBYBARS_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/nearbybars";
+	
+	public static final String FAVORITES_URL = "http://bar-view.com/index.php?/rest/favorites";
+	public static final String FAVORITE_URL = "http://bar-view.com/index.php?/rest/favorite";		// For POST and DELETE
+	public static final String BARIMAGES_URL = "http://bar-view.com/barview/index.php?/rest/barimage";
+	public static final String NEARBYBARS_URL = "http://bar-view.com/barview/index.php?/rest/nearbybars";
 	
 	// Favorite constants for the XML
 	public static final String FAVORITE_AGGREGATE	= "favorite";

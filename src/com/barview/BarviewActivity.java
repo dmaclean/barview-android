@@ -55,5 +55,16 @@ public class BarviewActivity extends TabActivity {
         				.setContent(intent);
         
         tabHost.addTab(spec);
+        
+        
+        /*
+         * Create a tab for the Facebook login activity
+         */
+        intent = new Intent().setClass(this, FacebookActivity.class);
+        spec = tabHost.newTabSpec("facebook")
+        				.setIndicator("Facebook Login", resources.getDrawable(R.drawable.ic_tab_favorites))
+        				.setContent(intent);
+        
+        tabHost.addTab(spec);
     }
 }

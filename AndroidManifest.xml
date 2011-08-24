@@ -3,7 +3,7 @@
       package="com.barview"
       android:versionCode="1"
       android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="13" />
+    <uses-sdk android:minSdkVersion="7" />		<!-- 2.1 -->
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -27,6 +27,8 @@
         
         <activity 	android:name="MapLookupActivity"></activity>
         <activity 	android:name="CurrentLocationActivity"></activity>
+        
+        <activity 	android:name="FacebookActivity"></activity>
 		
     </application>
 </manifest>
