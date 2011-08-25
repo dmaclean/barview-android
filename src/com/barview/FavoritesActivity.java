@@ -18,18 +18,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-import com.barview.adapters.FavoriteAdapter;
 import com.barview.constants.BarviewConstants;
 import com.barview.listeners.FavoriteDelete2OnClickListener;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
 import com.barview.utilities.BarviewUtilities;
+import com.barview.utilities.FacebookUtility;
 import com.barview.xml.XMLHandler;
 
 public class FavoritesActivity extends ListActivity {
@@ -39,8 +39,6 @@ public class FavoritesActivity extends ListActivity {
 	private static ArrayList<String> barIds;
 	
 	FavoritesActivity favoritesClass = this;
-	
-	private FavoriteAdapter m_adapter;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,10 +85,6 @@ public class FavoritesActivity extends ListActivity {
 			}
 			
 		});
-		
-//		this.m_adapter = new FavoriteAdapter(this, R.layout.row, favorites);
-//		this.m_adapter.setBarIds(barIds);
-//        setListAdapter(this.m_adapter);
 	}
 	
 	/**
@@ -99,8 +93,6 @@ public class FavoritesActivity extends ListActivity {
 	 */
 	protected void onResume() {
 		super.onResume();
-		
-		Log.i("FavoritesActivity", "in onResume");
 		
 		FavoriteFetcher ff = new FavoriteFetcher();
 		ff.execute("dmac");
@@ -132,8 +124,12 @@ public class FavoritesActivity extends ListActivity {
 		
 		@Override
 		protected String doInBackground(String... params) {
+			// User isn't logged in.  Don't do anything.
+			if(!FacebookUtility.isLoggedIn())
+				return "Not logged in";
+			
 			RestClient client = new RestClient(BarviewUtilities.getFavoritesURLForRunMode());
-			client.AddHeader("User_id", "dmac");
+			client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
 			
 			try {
 				client.Execute(RequestMethod.GET);
@@ -161,16 +157,20 @@ public class FavoritesActivity extends ListActivity {
 	            setFavorites(           myExampleHandler.getParsedFavorites());
 			}
 			catch(Exception e) {
-				Log.e("doInBackground", "An error occurred: " + e.getMessage());
+				Log.e(FavoriteFetcher.class.getName(), "doInBackground - An error occurred: " + e.getMessage());
 			}
 			
 			return response;
 		}
 		
 		protected void onPostExecute(String result) {
+			if(result.equals("Not logged in")) {
+				Toast toast = Toast.makeText(favoritesClass, R.string.toast_notLoggedIn, Toast.LENGTH_LONG);
+				toast.show();
+			}
+			
 			// Clear out the bar ids because we have a new list
 			barIds.clear();
-//			m_adapter.clear();
 			
 			String[] favesArray = new String[favorites.size()];
 			int i= 0;
@@ -179,10 +179,8 @@ public class FavoritesActivity extends ListActivity {
 				Log.i("FavoritesActivity", "Added favorite - " + f.getBarName());
 				
 				barIds.add(f.getBarId());
-//				m_adapter.add(f);
 			}
 			
-//			m_adapter.notifyDataSetChanged();
 			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
 		}
 	}
