@@ -47,4 +47,6 @@ public class BarviewConstants {
 	public static final String BAR_NAME				= "bar_name";
 	
 	public static final int GEOPOINT_MULT			= 1000000;
+	
+	public static final int BARIMAGE_REFRESH_TIME	= 5000;		// Time in milliseconds
 }

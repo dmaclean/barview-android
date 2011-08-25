@@ -6,6 +6,7 @@
     <!-- Favorites -->
     <string name="favoritesTitle">Favorites</string>
     <string name="deleteButton">Delete</string>
+    <string name="toast_notLoggedIn">Please log into Facebook to have access to your favorite bars.</string>
     
     <!-- Bar Lookup -->
     <string name="searchButton">Search</string>
