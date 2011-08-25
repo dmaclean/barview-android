@@ -10,8 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="true"
-        android:apiKey="0_5PS4CaCXxThNkB5PrBpGn3pvHgy_-MXzni20g" android:layout_below="@+id/button1"/>
-<!-- 25:23:AA:81:52:A1:C9:04:39:70:BC:C6:05:47:78:6E -->
+        android:apiKey="0_5PS4CaCXxR9V_QHkakrF3yqgN6rbMPnFCiNwg" android:layout_below="@+id/button1"/>
+        
     <Button android:text="@string/searchButton" android:layout_height="wrap_content" android:id="@+id/button1" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentRight="true"></Button>
     <EditText android:layout_height="wrap_content" android:id="@+id/editText1" android:layout_width="match_parent" android:layout_alignBaseline="@+id/button1" android:layout_alignBottom="@+id/button1" android:layout_toLeftOf="@+id/button1"></EditText>
 </RelativeLayout>

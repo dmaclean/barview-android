@@ -10,7 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="true"
-        android:apiKey="0_5PS4CaCXxThNkB5PrBpGn3pvHgy_-MXzni20g"/>
-<!-- 25:23:AA:81:52:A1:C9:04:39:70:BC:C6:05:47:78:6E -->
+        android:apiKey="0_5PS4CaCXxR9V_QHkakrF3yqgN6rbMPnFCiNwg"/>
     
 </LinearLayout>

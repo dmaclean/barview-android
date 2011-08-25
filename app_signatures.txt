@@ -1,0 +1,22 @@
+Debug signature
+
+Keystore name: "debug.keystore"
+Keystore password: "android"
+Key alias: "androiddebugkey"
+Key password: "android"
+CN: "CN=Android Debug,O=Android,C=US"
+
+25:23:AA:81:52:A1:C9:04:39:70:BC:C6:05:47:78:6E
+0_5PS4CaCXxThNkB5PrBpGn3pvHgy_-MXzni20g (Google Maps API key)
+
+
+
+
+
+Real signature (signed with cfSZ9KiM)
+
+Facebook:
+keytool -exportcert -alias barview -keystore barview.keystore | openssl sha1 -binary | openssl base64
+
+56:A0:20:D1:28:BD:CF:06:F7:8A:6F:76:17:88:91:12
+0_5PS4CaCXxR9V_QHkakrF3yqgN6rbMPnFCiNwg (Google Maps API key)
