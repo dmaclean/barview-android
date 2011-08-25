@@ -45,6 +45,23 @@ public class FacebookUtility {
 		return facebook;
 	}
 	
+	/**
+	 * Determines whether the user is logged into facebook.
+	 * 
+	 * @return		True, if the user is logged in.  False, otherwise.
+	 */
+	public static boolean isLoggedIn() {
+		return (facebook != null && facebook.isSessionValid());
+	}
+	
+	public static String getRESTUserId() {
+		if(isLoggedIn()) {
+			return "fb" + getAttribute(FB_ID);
+		}
+		
+		return null;
+	}
+	
 	public static String getUserId() {
 		//{"id":"668512494","name":"Dan MacLean","first_name":"Dan","last_name":"MacLean","link":"http:\\/\\/www.facebook.com\\/daniel.maclean","username":"daniel.maclean","gender":"male","timezone":-4,"locale":"en_US","verified":true,"updated_time":"2011-05-18T20:13:23+0000"}
 		if(facebook != null && facebook.isSessionValid()) {
