@@ -105,8 +105,10 @@ public class DetailActivity extends Activity {
 					Toast toast;
 					if(!response.equals(""))
 						toast = Toast.makeText(me, "Unable to add " + barName + " to favorites.  Please try again later.", Toast.LENGTH_SHORT);
-					else
+					else {
+						favesButton.setVisibility(View.INVISIBLE);
 						toast = Toast.makeText(me, "Added " + barName + " to favorites!", Toast.LENGTH_SHORT);
+					}
 					
 					toast.show();
 				} catch (Exception e) {
