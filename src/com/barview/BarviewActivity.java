@@ -1,9 +1,17 @@
 package com.barview;
 
+import com.barview.constants.BarviewConstants;
+import com.barview.mobile.BarviewMobileUser;
+import com.barview.mobile.BarviewMobileUtility;
+import com.barview.utilities.FacebookUtility;
+
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TabHost;
 
 public class BarviewActivity extends TabActivity {
@@ -64,5 +72,31 @@ public class BarviewActivity extends TabActivity {
         				.setContent(intent);
         
         tabHost.addTab(spec);
+        
+        
+        
+        /*
+         * Determine if a user is already logged in.
+         */
+        SharedPreferences settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
+        String type = settings.getString(BarviewConstants.LOGIN_TYPE, "");
+        
+        // If facebook, just make an attribute call to refresh attributes.
+        if(type.equals(BarviewConstants.LOGIN_TYPE_FACEBOOK)) {
+        	String fbId = FacebookUtility.getAttribute(FacebookUtility.FB_ID);
+        	Log.i(BarviewActivity.class.getName(), "Refreshed attributes for Facebook user " + fbId);
+        }
+        // If Barview, populate the barview user object with preferences values.
+        else if(type.equals(BarviewConstants.LOGIN_TYPE_BARVIEW)) {
+        	BarviewMobileUser user = BarviewMobileUtility.getUser();
+    		
+            user.setFirstName(settings.getString(BarviewConstants.BARVIEW_FIRST_NAME, ""));
+            user.setLastName(settings.getString(BarviewConstants.BARVIEW_LAST_NAME, ""));
+            user.setUserId(settings.getString(BarviewConstants.BARVIEW_EMAIL, ""));
+            user.setDob(settings.getString(BarviewConstants.BARVIEW_DOB, ""));
+            user.setCity(settings.getString(BarviewConstants.BARVIEW_CITY, ""));
+            user.setState(settings.getString(BarviewConstants.BARVIEW_STATE, ""));
+            user.setToken(settings.getString(BarviewConstants.BARVIEW_TOKEN, ""));
+        }
     }
 }

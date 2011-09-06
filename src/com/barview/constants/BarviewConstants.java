@@ -68,4 +68,10 @@ public class BarviewConstants {
 	public static final int GEOPOINT_MULT			= 1000000;
 	
 	public static final int BARIMAGE_REFRESH_TIME	= 5000;		// Time in milliseconds
+	
+	public static final String LOGIN_TYPE			= "Login-Type";
+	public static final String LOGIN_TYPE_FACEBOOK	= "Facebook";
+	public static final String LOGIN_TYPE_BARVIEW	= "Barview";
+	
+	public static final String PREFS_NAME			= "Barview";
 }

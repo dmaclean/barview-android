@@ -192,8 +192,9 @@ public class BarviewMobileLoginTask extends AsyncTask<String, Integer, String> {
 	private void setPreferences() {
 		BarviewMobileUser user = BarviewMobileUtility.getUser();
 		
-		SharedPreferences settings = this.activity.getPreferences(Activity.MODE_PRIVATE);
+		SharedPreferences settings = activity.getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
+        editor.putString(BarviewConstants.LOGIN_TYPE, BarviewConstants.LOGIN_TYPE_BARVIEW);
         editor.putString(BarviewConstants.BARVIEW_FIRST_NAME, user.getFirstName());
         editor.putString(BarviewConstants.BARVIEW_LAST_NAME, user.getLastName());
         editor.putString(BarviewConstants.BARVIEW_EMAIL, user.getUserId());

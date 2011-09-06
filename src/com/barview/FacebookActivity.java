@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,17 @@ public class FacebookActivity extends Activity {
 						facebook.logout(activity);
 						fbLoginButton.setText(R.string.fb_login);
 						bvLoginButton.setVisibility(View.VISIBLE);
+						
+						// Clear out preferences
+						SharedPreferences settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
+						SharedPreferences.Editor editor = settings.edit();
+						editor.remove(FacebookUtility.FB_ID)
+						.remove(BarviewConstants.LOGIN_TYPE)
+						.remove(FacebookUtility.FB_FIRST_NAME)
+						.remove(FacebookUtility.FB_LAST_NAME)
+						.remove(FacebookUtility.FB_NAME);
+						
+						editor.commit();
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -76,6 +88,16 @@ public class FacebookActivity extends Activity {
 			            			FacebookUtility.getAttribute(FacebookUtility.FB_ID));
 			            	fbLoginButton.setText(R.string.fb_logout);
 			            	bvLoginButton.setVisibility(View.INVISIBLE);
+			            	
+			            	// Set preferences
+			            	SharedPreferences settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
+							SharedPreferences.Editor editor = settings.edit();
+							editor.putString(BarviewConstants.LOGIN_TYPE, BarviewConstants.LOGIN_TYPE_FACEBOOK)
+							.putString(FacebookUtility.FB_ID, FacebookUtility.getAttribute(FacebookUtility.FB_ID))
+							.putString(FacebookUtility.FB_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_NAME))
+							.putString(FacebookUtility.FB_FIRST_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_FIRST_NAME))
+							.putString(FacebookUtility.FB_LAST_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_LAST_NAME));
+							editor.commit();
 			            }
 	
 			            public void onFacebookError(FacebookError error) {
@@ -114,6 +136,8 @@ public class FacebookActivity extends Activity {
                 	BarviewMobileLoginTask login = new BarviewMobileLoginTask();
                 	login.setActivity(activity);
                 	login.execute(BarviewConstants.BARVIEW_LOGOUT, barviewUser.getToken());
+                	
+                	// Clearing of preferences takes place in BarviewMobileLoginTask
 				}
 				else {
 					LayoutInflater factory = LayoutInflater.from(arg0.getContext());
