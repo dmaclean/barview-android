@@ -143,6 +143,14 @@ public class FacebookActivity extends Activity {
 			}
 			
 		});
+		
+		/*
+		 * Toggle button visibility
+		 */
+		if(FacebookUtility.isLoggedIn())
+			bvLoginButton.setVisibility(View.INVISIBLE);
+		else if(BarviewMobileUtility.isLoggedIn())
+			fbLoginButton.setVisibility(View.INVISIBLE);
 	}
 	
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
