@@ -13,7 +13,7 @@ CN: "CN=Android Debug,O=Android,C=US"
 
 
 
-Real signature (signed with cfSZ9KiM)
+Real signature (signed with cf)
 
 Facebook:
 keytool -exportcert -alias barview -keystore barview.keystore | openssl sha1 -binary | openssl base64
