@@ -25,6 +25,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.barview.constants.BarviewConstants;
 import com.barview.listeners.FavoriteDelete2OnClickListener;
+import com.barview.mobile.BarviewMobileUtility;
 import com.barview.models.Favorite;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
@@ -125,11 +126,14 @@ public class FavoritesActivity extends ListActivity {
 		@Override
 		protected String doInBackground(String... params) {
 			// User isn't logged in.  Don't do anything.
-			if(!FacebookUtility.isLoggedIn())
+			if(!FacebookUtility.isLoggedIn() && !BarviewMobileUtility.isLoggedIn())
 				return "Not logged in";
 			
 			RestClient client = new RestClient(BarviewUtilities.getFavoritesURLForRunMode());
-			client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
+			if(FacebookUtility.isLoggedIn())
+				client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
+			else if(BarviewMobileUtility.isLoggedIn())
+				client.AddHeader(BarviewConstants.REST_USER_ID, BarviewMobileUtility.getUser().getUserId());
 			
 			try {
 				client.Execute(RequestMethod.GET);

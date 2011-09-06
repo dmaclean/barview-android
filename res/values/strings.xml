@@ -16,7 +16,14 @@
     <string name="addToFaves">Add to Faves</string>
     
     <!-- Facebook -->
-    <string name="login">Log in</string>
-    <string name="logout">Log out</string>
+    <string name="fb_login">Log in with Facebook</string>
+    <string name="fb_logout">Log out of Facebook</string>
+    <string name="bv_login">Log in with Bar-view </string>
+    <string name="bv_logout">Log out of Bar-view</string>
+    
+    <string name="bv_login_title">Log in with your Bar-view.com account.</string>
+  	<string name="bv_login_usertext">Email</string>
+  	<string name="bv_login_passtext">Password</string>
+  	<string name="bv_login_button">Log in!</string>
     
 </resources>

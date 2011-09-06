@@ -13,8 +13,6 @@ public class BarviewActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-//        startActivity(new Intent(this, FavoritesActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)	);
-        
         Resources resources = getResources();
         TabHost tabHost = getTabHost();
         TabHost.TabSpec spec;

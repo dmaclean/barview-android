@@ -8,17 +8,21 @@ public class BarviewConstants {
 	
 	public static final String DEV_MODE				= "DEV";
 	public static final String PROD_MODE			= "PROD";
-	public static final String RUN_MODE				= PROD_MODE;
+	public static final String RUN_MODE				= DEV_MODE;
 	
 	public static final String FAVORITES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorites";
 	public static final String FAVORITE_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorite";		// For POST and DELETE
 	public static final String BARIMAGES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/barimage";
 	public static final String NEARBYBARS_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/nearbybars";
+	public static final String BARVIEWLOGIN_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/mobilelogin";
+	public static final String BARVIEWLOGOUT_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/mobilelogin/logout";
 	
 	public static final String FAVORITES_URL = "http://bar-view.com/index.php?/rest/favorites";
 	public static final String FAVORITE_URL = "http://bar-view.com/index.php?/rest/favorite";		// For POST and DELETE
 	public static final String BARIMAGES_URL = "http://bar-view.com/index.php?/rest/barimage";
 	public static final String NEARBYBARS_URL = "http://bar-view.com/index.php?/rest/nearbybars";
+	public static final String BARVIEWLOGIN_URL = "http://bar-view.com/index.php?/mobilelogin";
+	public static final String BARVIEWLOGOUT_URL = "http://bar-view.com/index.php?/mobilelogin/logout";
 	
 	// Favorite constants for the XML
 	public static final String FAVORITE_AGGREGATE	= "favorite";
@@ -41,6 +45,21 @@ public class BarviewConstants {
 	
 	// REST stuff
 	public static final String REST_USER_ID			= "User_id";
+	
+	// Barview Mobile login
+	public static final String BARVIEW_LOGIN		= "Login";
+	public static final String BARVIEW_LOGOUT		= "Logout";
+	public static final String BARVIEW_USERNAME		= "BV_USERNAME";
+	public static final String BARVIEW_PASSWORD		= "BV_PASSWORD";
+	public static final String BARVIEW_TOKEN_HEADER	= "BV_TOKEN";
+	public static final String BARVIEW_USER			= "user";
+	public static final String BARVIEW_FIRST_NAME	= "firstname";
+	public static final String BARVIEW_LAST_NAME	= "lastname";
+	public static final String BARVIEW_EMAIL		= "email";
+	public static final String BARVIEW_DOB			= "dob";
+	public static final String BARVIEW_CITY			= "city";
+	public static final String BARVIEW_STATE		= "state";
+	public static final String BARVIEW_TOKEN		= "token";
 	
 	// Extras parameters
 	public static final String BAR_ID				= "bar_id";

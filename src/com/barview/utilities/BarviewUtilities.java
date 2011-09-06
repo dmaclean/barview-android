@@ -50,4 +50,18 @@ public class BarviewUtilities {
 		
 		return BarviewConstants.BARIMAGES_URL;
 	}
+	
+	public static String getBarviewLoginURLForRunMode() {
+		if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEV_MODE))
+			return BarviewConstants.BARVIEWLOGIN_URL_DEV;
+		
+		return BarviewConstants.BARVIEWLOGIN_URL;
+	}
+	
+	public static String getBarviewLogoutURLForRunMode() {
+		if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEV_MODE))
+			return BarviewConstants.BARVIEWLOGOUT_URL_DEV;
+		
+		return BarviewConstants.BARVIEWLOGOUT_URL;
+	}
 }

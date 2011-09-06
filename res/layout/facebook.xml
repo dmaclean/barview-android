@@ -4,6 +4,7 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <Button android:layout_height="wrap_content" android:id="@+id/fblogin" android:layout_width="match_parent" android:text="@string/login"></Button>
+    <Button android:layout_height="wrap_content" android:id="@+id/fblogin" android:layout_width="match_parent" android:text="@string/fb_login"></Button>
+    <Button android:layout_height="wrap_content" android:id="@+id/bvlogin" android:layout_width="match_parent" android:text="@string/bv_login"></Button>
     
 </LinearLayout>

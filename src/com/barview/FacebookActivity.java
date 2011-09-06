@@ -4,14 +4,22 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.barview.constants.BarviewConstants;
+import com.barview.mobile.BarviewMobileLoginTask;
+import com.barview.mobile.BarviewMobileUser;
+import com.barview.mobile.BarviewMobileUtility;
 import com.barview.utilities.FacebookUtility;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
@@ -22,17 +30,23 @@ public class FacebookActivity extends Activity {
 	
 	Facebook facebook = FacebookUtility.getFacebook();
 	
+	BarviewMobileUser barviewUser = BarviewMobileUtility.getUser();
+	
 	FacebookActivity activity = this;
 	
-	Button loginButton;
+	Button fbLoginButton;
+	Button bvLoginButton;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.facebook);
 		
-		loginButton = (Button) findViewById(R.id.fblogin);
-		loginButton.setText( (facebook.isSessionValid()) ? R.string.logout : R.string.login );
-		loginButton.setOnClickListener(new OnClickListener() {
+		/*
+		 * FACEBOOK LOGON BUTTON
+		 */
+		fbLoginButton = (Button) findViewById(R.id.fblogin);
+		fbLoginButton.setText( (facebook.isSessionValid()) ? R.string.fb_logout : R.string.fb_login );
+		fbLoginButton.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				/*
@@ -42,7 +56,7 @@ public class FacebookActivity extends Activity {
 				if(facebook.isSessionValid()) {
 					try {
 						facebook.logout(activity);
-						loginButton.setText(R.string.login);
+						fbLoginButton.setText(R.string.fb_login);
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -59,7 +73,7 @@ public class FacebookActivity extends Activity {
 			            public void onComplete(Bundle values) {
 			            	Log.i(FacebookActivity.class.getName(), "Logged into Facebook and got user id of " + 
 			            			FacebookUtility.getAttribute(FacebookUtility.FB_ID));
-			            	loginButton.setText(R.string.logout);
+			            	fbLoginButton.setText(R.string.fb_logout);
 			            }
 	
 			            public void onFacebookError(FacebookError error) {
@@ -82,6 +96,51 @@ public class FacebookActivity extends Activity {
 			}
 		});
 		
+		/*
+		 * BARVIEW LOGON BUTTON
+		 */
+		bvLoginButton = (Button) findViewById(R.id.bvlogin);
+		bvLoginButton.setText( (barviewUser.isSessionValid()) ? R.string.bv_logout : R.string.bv_login );
+		bvLoginButton.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				
+				if(barviewUser.isSessionValid()) {
+					/*
+                	 * Make call-out to mobilelogin.php here.
+                	 */
+                	BarviewMobileLoginTask login = new BarviewMobileLoginTask();
+                	login.setActivity(activity);
+                	login.execute(BarviewConstants.BARVIEW_LOGOUT, barviewUser.getToken());
+				}
+				else {
+					LayoutInflater factory = LayoutInflater.from(arg0.getContext());
+		            final View bvLogon = factory.inflate(R.layout.barviewlogin, null);
+		            
+		            AlertDialog d = new AlertDialog.Builder(arg0.getContext())
+		                .setTitle(R.string.bv_login_title)
+		                .setView(bvLogon)
+		                .setNeutralButton(R.string.bv_login_button, new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int whichButton) {
+		                    	AlertDialog categoryDetail = (AlertDialog)dialog;
+		                    	
+		                    	EditText username = (EditText) categoryDetail.findViewById(R.id.bv_login_username);
+		                    	EditText password = (EditText) categoryDetail.findViewById(R.id.bv_login_password);
+		                    	
+		                    	/*
+		                    	 * Make call-out to mobilelogin.php here.
+		                    	 */
+		                    	BarviewMobileLoginTask login = new BarviewMobileLoginTask();
+		                    	login.setActivity(activity);
+		                    	login.execute(BarviewConstants.BARVIEW_LOGIN, username.getText().toString(), password.getText().toString());
+		                    }
+		                })
+		                .create();
+		            d.show();
+				}
+			}
+			
+		});
 	}
 	
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
