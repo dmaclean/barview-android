@@ -57,6 +57,7 @@ public class FacebookActivity extends Activity {
 					try {
 						facebook.logout(activity);
 						fbLoginButton.setText(R.string.fb_login);
+						bvLoginButton.setVisibility(View.VISIBLE);
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -74,6 +75,7 @@ public class FacebookActivity extends Activity {
 			            	Log.i(FacebookActivity.class.getName(), "Logged into Facebook and got user id of " + 
 			            			FacebookUtility.getAttribute(FacebookUtility.FB_ID));
 			            	fbLoginButton.setText(R.string.fb_logout);
+			            	bvLoginButton.setVisibility(View.INVISIBLE);
 			            }
 	
 			            public void onFacebookError(FacebookError error) {
