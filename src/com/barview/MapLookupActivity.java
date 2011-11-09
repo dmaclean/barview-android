@@ -127,6 +127,30 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
         mapController.animateTo(point);
         mapController.setZoom(10);
 	}
+	
+	/**
+	 * Override the onResume callback so we can turn the GPS updates back on.  The updates
+	 * are stopped whenever we leave this Activity.
+	 */
+	public void onResume() {
+		super.onResume();
+		Log.i("onResume", "In onResume, about to start up the LocationManager again.");
+		
+		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this);
+	}
+	
+	/**
+	 * Shut off GPS updates whenever we leave this Activity.  This is necessary so we don't
+	 * kill the battery if/when the user leaves the application.
+	 */
+	public void onPause() {
+		super.onPause();
+		Log.i("onPause", "In onPause, about to shut down LocationManager updates.");
+		
+		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		lm.removeUpdates(this);
+	}
 
 	@Override
 	protected boolean isRouteDisplayed() {
