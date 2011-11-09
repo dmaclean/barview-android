@@ -17,6 +17,9 @@ Real signature (signed with cf)
 
 Facebook:
 keytool -exportcert -alias barview -keystore barview.keystore | openssl sha1 -binary | openssl base64
+keytool -genkey -v -keystore barview.keystore -alias barview -keyalg RSA -keysize 2048 -validity 10000
 
-56:A0:20:D1:28:BD:CF:06:F7:8A:6F:76:17:88:91:12
-0_5PS4CaCXxR9V_QHkakrF3yqgN6rbMPnFCiNwg (Google Maps API key)
+#56:A0:20:D1:28:BD:CF:06:F7:8A:6F:76:17:88:91:12
+7A:D8:2A:0D:A5:82:C4:7C:E7:7C:7E:54:1C:0F:DC:F2
+#0_5PS4CaCXxR9V_QHkakrF3yqgN6rbMPnFCiNwg (Google Maps API key)
+0_5PS4CaCXxR32EzquwTGePRFqFg6azhTDUcSuQ
