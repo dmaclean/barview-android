@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.barview.constants.BarviewConstants;
 import com.barview.rest.NearbyBarFetcher;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -19,7 +20,6 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 	
 	MapController mapController;
 	
-//	private NearbyBarFetcher fetcher;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,10 +31,6 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 		
 		// Get a handle for the controller of our MapView.
 		mapController = mapView.getController();
-		
-		// Set up the Location Manager
-		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this);
 	}
 	
 	/**
@@ -47,7 +43,13 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 		
 		// Set up the Location Manager
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
+		
+		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		int lat = (int) (location.getLatitude() * BarviewConstants.GEOPOINT_MULT);
+		int lng = (int) (location.getLongitude() * BarviewConstants.GEOPOINT_MULT);
+		GeoPoint p = new GeoPoint(lat, lng);
+		mapController.animateTo(p);
 	}
 	
 	/**
@@ -72,7 +74,9 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 		if (location != null) {
 			double lat = location.getLatitude();
 			double lng = location.getLongitude();
-			GeoPoint p = new GeoPoint((int) lat * 1000000, (int) lng * 1000000);
+			int latInt = (int) (location.getLatitude() * BarviewConstants.GEOPOINT_MULT);
+			int lngInt = (int) (location.getLongitude() * BarviewConstants.GEOPOINT_MULT);
+			GeoPoint p = new GeoPoint(latInt, lngInt);
 			mapController.animateTo(p);
 			
 			// Grab any nearby bars and annotate them on the map
