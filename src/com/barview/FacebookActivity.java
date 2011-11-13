@@ -93,10 +93,13 @@ public class FacebookActivity extends Activity {
 			            	SharedPreferences settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
 							SharedPreferences.Editor editor = settings.edit();
 							editor.putString(BarviewConstants.LOGIN_TYPE, BarviewConstants.LOGIN_TYPE_FACEBOOK)
+							.putString(FacebookUtility.FB_ACCESS_TOKEN, facebook.getAccessToken())
+							.putLong(FacebookUtility.FB_EXPIRES, facebook.getAccessExpires())
 							.putString(FacebookUtility.FB_ID, FacebookUtility.getAttribute(FacebookUtility.FB_ID))
 							.putString(FacebookUtility.FB_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_NAME))
 							.putString(FacebookUtility.FB_FIRST_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_FIRST_NAME))
 							.putString(FacebookUtility.FB_LAST_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_LAST_NAME));
+							
 							editor.commit();
 			            }
 	
