@@ -1,10 +1,5 @@
 package com.barview;
 
-import com.barview.constants.BarviewConstants;
-import com.barview.mobile.BarviewMobileUser;
-import com.barview.mobile.BarviewMobileUtility;
-import com.barview.utilities.FacebookUtility;
-
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -14,7 +9,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
+import com.barview.constants.BarviewConstants;
+import com.barview.mobile.BarviewMobileUser;
+import com.barview.mobile.BarviewMobileUtility;
+import com.barview.utilities.FacebookUtility;
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.FacebookError;
+import com.facebook.android.Facebook.DialogListener;
+
 public class BarviewActivity extends TabActivity {
+	
+	Facebook fb;		// Singleton, no harm if it's already there.
+	SharedPreferences settings;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,17 +80,62 @@ public class BarviewActivity extends TabActivity {
         				.setContent(intent);
         
         tabHost.addTab(spec);
-        
-        
-        
-        /*
+    }
+    
+    /**
+     * We use this callback to set up a currently-logged-in user if they have closed the application
+     * and re-opened it.
+     * 
+     * For Facebook we need to (possibly) re-instantiate the object and populate it with the access token
+     * and expires variables that were saved into Preferences.  Then, if the session happens to be invalid
+     * then we re-authorize and save the new access token to Preferences.
+     * 
+     * For Barview we just have to fetch the BarviewUser object (possibly instantiating in the process) 
+     * and populate it with all the data stored in Preferences, including the token.
+     */
+    public void onResume() {
+    	super.onResume();
+    	
+    	/*
          * Determine if a user is already logged in.
          */
-        SharedPreferences settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
+    	fb = FacebookUtility.getFacebook();
+    	settings = getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
+    	
         String type = settings.getString(BarviewConstants.LOGIN_TYPE, "");
         
         // If facebook, just make an attribute call to refresh attributes.
         if(type.equals(BarviewConstants.LOGIN_TYPE_FACEBOOK)) {
+        	
+        	// Set the access token
+        	String accessToken = settings.getString(FacebookUtility.FB_ACCESS_TOKEN, null);
+        	long expires = settings.getLong(FacebookUtility.FB_EXPIRES, 0);
+        	if(accessToken != null)
+        		fb.setAccessToken(accessToken);
+        	if(expires != 0)
+        		fb.setAccessExpires(expires);
+        	
+        	/*
+             * Only call authorize if the access_token has expired.
+             */
+            if(!fb.isSessionValid()) {
+
+                fb.authorize(this, new String[] {}, new DialogListener() {
+                    public void onComplete(Bundle values) {
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString(FacebookUtility.FB_ACCESS_TOKEN, fb.getAccessToken());
+                        editor.putLong(FacebookUtility.FB_EXPIRES, fb.getAccessExpires());
+                        editor.commit();
+                    }
+        
+                    public void onFacebookError(FacebookError error) {}
+        
+                    public void onError(DialogError e) {}
+        
+                    public void onCancel() {}
+                });
+            }
+        	
         	String fbId = FacebookUtility.getAttribute(FacebookUtility.FB_ID);
         	Log.i(BarviewActivity.class.getName(), "Refreshed attributes for Facebook user " + fbId);
         }
