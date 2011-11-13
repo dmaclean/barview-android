@@ -20,6 +20,8 @@ import com.facebook.android.Facebook;
 public class FacebookUtility {
 	
 	public static final String FB_ID 			= "id";
+	public static final String FB_ACCESS_TOKEN	= "access_token";
+	public static final String FB_EXPIRES		= "access_expires";
 	public static final String FB_NAME			= "name";
 	public static final String FB_FIRST_NAME	= "first_name";
 	public static final String FB_LAST_NAME		= "last_name";
