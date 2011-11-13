@@ -57,12 +57,18 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 	
 	private boolean foundLocation = false;
 	
-	private static final int latitudeE6 = 37985339;
-    private static final int longitudeE6 = 23716735;
+	/**
+	 * The last point that the user successfully searched for.  We want to save this
+	 * because if after searching for a location the user moves to the Current Location
+	 * tab then they'll lose their place if moving back to this tab.
+	 */
+	private GeoPoint lastSearch;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.barlookup);
+		
+		lastSearch = null;
 		
 		bars = new ArrayList<Bar>();
 		
@@ -87,9 +93,6 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 					if(addressList!=null && addressList.size()>0) {
 						double lat = addressList.get(0).getLatitude();
 						double lng = addressList.get(0).getLongitude();
-//						GeoPoint pt = new GeoPoint(lat,lng);
-//						mapView.getController().setZoom(15);
-//						mapView.getController().setCenter(pt);
 						
 						NearbyBarFetcher ff = new NearbyBarFetcher();
 						ff.execute(lat, lng);
@@ -104,27 +107,10 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 			}
 		});
 		
-		
-		
-		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this);
-		
-		
-		List<Overlay> mapOverlays = mapView.getOverlays();
-        Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
-        CustomItemizedOverlay itemizedOverlay = 
-             new CustomItemizedOverlay(drawable, this);
-        
-        GeoPoint point = new GeoPoint(latitudeE6, longitudeE6);
-        OverlayItem overlayitem = 
-             new OverlayItem(point, "Hello", "I'm in Athens, Greece!");
-        
-        itemizedOverlay.addOverlay(overlayitem);
-        mapOverlays.add(itemizedOverlay);
-        
+//		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+//		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
+//		
         mapController = mapView.getController();
-        
-        mapController.animateTo(point);
         mapController.setZoom(10);
 	}
 	
@@ -134,10 +120,16 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 	 */
 	public void onResume() {
 		super.onResume();
-		Log.i("onResume", "In onResume, about to start up the LocationManager again.");
+		Log.i("onResume", "In onResume, about to zoom to the last location the user searched for.");
 		
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this);
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
+
+		// Make sure we have an old search to refocus to. 
+		if(lastSearch != null) {
+			mapController.animateTo(lastSearch);
+			mapController.setZoom(14);
+		}
 	}
 	
 	/**
@@ -265,6 +257,9 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 										(int) (lng * BarviewConstants.GEOPOINT_MULT));
 			mapController.animateTo(p);
 			mapController.setZoom(14);
+			
+			// Save this location as the last-searched-for point.
+			lastSearch = p;
 		}
 	}
 }
