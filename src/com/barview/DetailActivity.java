@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.barview.base64.Base64;
 import com.barview.constants.BarviewConstants;
+import com.barview.mobile.BarviewMobileUtility;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
 import com.barview.utilities.BarviewUtilities;
@@ -172,6 +173,10 @@ public class DetailActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			RestClient client = new RestClient(BarviewUtilities.getBarImageURLForRunMode() + "binary/" + params[0]);
+			if(FacebookUtility.isLoggedIn())
+				client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
+			else if(BarviewMobileUtility.isLoggedIn())
+				client.AddHeader(BarviewConstants.REST_USER_ID, BarviewMobileUtility.getUser().getUserId());
 			
 			Log.i(BarImageFetcher.class.getName(), "Starting GET request for bar image");
 			long start = System.currentTimeMillis();
