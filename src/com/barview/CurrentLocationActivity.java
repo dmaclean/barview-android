@@ -45,11 +45,14 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
 		
+		// Grab our last known location, but only if it exists.
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		int lat = (int) (location.getLatitude() * BarviewConstants.GEOPOINT_MULT);
-		int lng = (int) (location.getLongitude() * BarviewConstants.GEOPOINT_MULT);
-		GeoPoint p = new GeoPoint(lat, lng);
-		mapController.animateTo(p);
+		if(location != null) {
+			int lat = (int) (location.getLatitude() * BarviewConstants.GEOPOINT_MULT);
+			int lng = (int) (location.getLongitude() * BarviewConstants.GEOPOINT_MULT);
+			GeoPoint p = new GeoPoint(lat, lng);
+			mapController.animateTo(p);
+		}
 	}
 	
 	/**
