@@ -194,14 +194,26 @@ public class BarviewMobileLoginTask extends AsyncTask<String, Integer, String> {
 		
 		SharedPreferences settings = activity.getSharedPreferences(BarviewConstants.PREFS_NAME, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString(BarviewConstants.LOGIN_TYPE, BarviewConstants.LOGIN_TYPE_BARVIEW);
-        editor.putString(BarviewConstants.BARVIEW_FIRST_NAME, user.getFirstName());
-        editor.putString(BarviewConstants.BARVIEW_LAST_NAME, user.getLastName());
-        editor.putString(BarviewConstants.BARVIEW_EMAIL, user.getUserId());
-        editor.putString(BarviewConstants.BARVIEW_DOB, user.getDob());
-        editor.putString(BarviewConstants.BARVIEW_CITY, user.getCity());
-        editor.putString(BarviewConstants.BARVIEW_STATE, user.getState());
-        editor.putString(BarviewConstants.BARVIEW_TOKEN, user.getToken());
+        if(user.isSessionValid()) {
+        	editor.putString(BarviewConstants.LOGIN_TYPE, BarviewConstants.LOGIN_TYPE_BARVIEW);
+        	editor.putString(BarviewConstants.BARVIEW_FIRST_NAME, user.getFirstName());
+            editor.putString(BarviewConstants.BARVIEW_LAST_NAME, user.getLastName());
+            editor.putString(BarviewConstants.BARVIEW_EMAIL, user.getUserId());
+            editor.putString(BarviewConstants.BARVIEW_DOB, user.getDob());
+            editor.putString(BarviewConstants.BARVIEW_CITY, user.getCity());
+            editor.putString(BarviewConstants.BARVIEW_STATE, user.getState());
+            editor.putString(BarviewConstants.BARVIEW_TOKEN, user.getToken());
+        }
+        else {
+        	editor.remove(BarviewConstants.LOGIN_TYPE);
+	        editor.remove(BarviewConstants.BARVIEW_FIRST_NAME);
+	        editor.remove(BarviewConstants.BARVIEW_LAST_NAME);
+	        editor.remove(BarviewConstants.BARVIEW_EMAIL);
+	        editor.remove(BarviewConstants.BARVIEW_DOB);
+	        editor.remove(BarviewConstants.BARVIEW_CITY);
+	        editor.remove(BarviewConstants.BARVIEW_STATE);
+	        editor.remove(BarviewConstants.BARVIEW_TOKEN);
+        }
         editor.commit();
 	}
 }
