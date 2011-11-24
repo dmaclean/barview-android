@@ -98,4 +98,20 @@ public class BarviewUtilities {
 		
 		return BarviewConstants.BARVIEWLOGOUT_URL;
 	}
+	
+	/**
+	 * Get the appropriate events URL for the current Run mode.
+	 * 
+	 * @return
+	 */
+	public static String getEventsURLForRunMode() {
+		if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEV_MODE))
+			return BarviewConstants.EVENTS_URL_DEV;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.BVDEV_MODE))
+			return BarviewConstants.EVENTS_URL_BVDEV;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEMO_MODE))
+			return BarviewConstants.EVENTS_URL_DEMO;
+		
+		return BarviewConstants.EVENTS_URL;
+	}
 }

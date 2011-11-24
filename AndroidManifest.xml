@@ -29,6 +29,8 @@
         <activity 	android:name="CurrentLocationActivity"></activity>
         
         <activity 	android:name="FacebookActivity"></activity>
+        
+        <activity 	android:name="DealsActivity"></activity>
 		
     </application>
 </manifest>

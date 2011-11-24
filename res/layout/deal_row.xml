@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout	xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal" android:padding="5dp">
+
+	<TextView 	android:id="@+id/deal_bar"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="30px"
+				android:textStyle="bold"/>
+
+    <TextView 	android:id="@+id/deal_detail"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/deal_bar"/>
+</RelativeLayout>
+
