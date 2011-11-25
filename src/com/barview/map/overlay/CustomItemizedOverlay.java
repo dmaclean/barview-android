@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 
 import com.barview.R;
 import com.barview.listeners.MapLookupClickListener;
 import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
