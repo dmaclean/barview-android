@@ -239,7 +239,7 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 				Log.i(MapLookupActivity.class.getName(), b.getName());
 				
 				
-		        Drawable drawable = me.getResources().getDrawable(R.drawable.icon);
+		        Drawable drawable = me.getResources().getDrawable(R.drawable.barview_map_annot);
 		        CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, me);
 //		        itemizedOverlay.setImageView(findViewById(R.layout.detail));
 //		        itemizedOverlay.setMap((MapView) findViewById(R.id.mapview));

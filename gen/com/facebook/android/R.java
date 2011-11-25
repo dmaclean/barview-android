@@ -11,13 +11,14 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int facebook_icon=0x7f020000;
-        public static final int ic_tab_artists_grey=0x7f020001;
-        public static final int ic_tab_artists_white=0x7f020002;
-        public static final int ic_tab_favorites=0x7f020003;
-        public static final int ic_tab_favorites_grey=0x7f020004;
-        public static final int ic_tab_favorites_white=0x7f020005;
-        public static final int icon=0x7f020006;
+        public static final int barview_map_annot=0x7f020000;
+        public static final int facebook_icon=0x7f020001;
+        public static final int ic_tab_artists_grey=0x7f020002;
+        public static final int ic_tab_artists_white=0x7f020003;
+        public static final int ic_tab_favorites=0x7f020004;
+        public static final int ic_tab_favorites_grey=0x7f020005;
+        public static final int ic_tab_favorites_white=0x7f020006;
+        public static final int icon=0x7f020007;
     }
     public static final class id {
         public static final int barDetailLayout=0x7f05000d;

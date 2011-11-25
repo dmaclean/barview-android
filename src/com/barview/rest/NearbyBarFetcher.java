@@ -131,7 +131,7 @@ public class NearbyBarFetcher extends AsyncTask<Double, Integer, String> {
 			Log.i(MapLookupActivity.class.getName(), b.getName());
 			
 			
-	        Drawable drawable = me.getResources().getDrawable(R.drawable.icon);
+	        Drawable drawable = me.getResources().getDrawable(R.drawable.barview_map_annot);
 	        CustomItemizedOverlay itemizedOverlay = new CustomItemizedOverlay(drawable, me);
 	        itemizedOverlay.setBarId(b.getBarId());
 	        
