@@ -14,12 +14,12 @@ import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.barview.FavoritesActivity.FavoriteFetcher;
 import com.barview.adapters.DealAdapter;
-import com.barview.concurrency.CountdownLatchProvider;
 import com.barview.constants.BarviewConstants;
 import com.barview.mobile.BarviewMobileUtility;
 import com.barview.models.Deal;
@@ -51,7 +51,6 @@ public class DealsActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		
-		l = CountdownLatchProvider.getLatch(CountdownLatchProvider.LATCH_DEALS);
 		DealsFetcher fetcher = new DealsFetcher();
 		fetcher.execute("");
 	}
@@ -128,11 +127,22 @@ public class DealsActivity extends ListActivity {
 				toast.show();
 			}
 			
-			setListAdapter(new DealAdapter(dealsActivity, R.layout.deal_row, deals));
+			if(deals.size() == 0) {
+				ArrayList<String> list = new ArrayList<String>();
+				list.add("No deals available right now.");
+				setListAdapter(new ArrayAdapter<String>(dealsActivity, R.layout.row, list));
+			}
+			else
+				setListAdapter(new DealAdapter(dealsActivity, R.layout.deal_row, deals));
+				
 			
 			// Need this check since the Latch is only created during unit testing!
 			if(l != null)
 				l.countDown();
 		}
+	}
+	
+	public void setCountDownLatch(CountDownLatch latch) {
+		l = latch;
 	}
 }
