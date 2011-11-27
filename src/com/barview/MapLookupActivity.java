@@ -10,6 +10,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -196,6 +197,17 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 		double lat;
 		double lng;
 		
+		ProgressDialog dialog;
+		
+		public NearbyBarFetcher() {
+			dialog = new ProgressDialog(me);
+		}
+		
+		protected void onPreExecute() {
+            this.dialog.setMessage("Fetching bars near " + me.text.getText());
+            this.dialog.show();
+        }
+		
 		@Override
 		protected String doInBackground(Double... params) {
 			lat = params[0];
@@ -265,6 +277,9 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 			
 			// Save this location as the last-searched-for point.
 			lastSearch = p;
+			
+			if (dialog.isShowing())
+                dialog.dismiss();
 		}
 	}
 }
