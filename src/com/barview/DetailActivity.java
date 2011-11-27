@@ -2,7 +2,9 @@ package com.barview;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.concurrent.CountDownLatch;
 
+import android.R;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -34,6 +36,8 @@ public class DetailActivity extends Activity {
 	private String barId;
 	private String barName;
 	
+	private CountDownLatch latch;
+	
 	/**
 	 * Flag that dictates whether or not the BILoop thread is running.
 	 */
@@ -42,7 +46,7 @@ public class DetailActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.detail);
+		setContentView(com.barview.R.layout.detail);
 	}
 	
 	/**
@@ -78,9 +82,13 @@ public class DetailActivity extends Activity {
 		 * We don't want the "Add to Favorites" button to be visible if
 		 * this bar is already a favorite.
 		 */
-		favesButton = (Button) findViewById(R.id.button1);
-		if(FavoritesActivity.isFavorite(barId) || !FacebookUtility.isLoggedIn())
+		favesButton = (Button) findViewById(com.barview.R.id.button1);
+		if( (!FacebookUtility.isLoggedIn() && !BarviewMobileUtility.isLoggedIn()) || 
+				((FacebookUtility.isLoggedIn() || BarviewMobileUtility.isLoggedIn()) && FavoritesActivity.isFavorite(barId)) ) {
 			favesButton.setVisibility(View.INVISIBLE);
+		}
+		else
+			favesButton.setVisibility(View.VISIBLE);
 		
 		/*
 		 * Create an OnClickListener for the "Add to Favorites" button so
@@ -119,7 +127,7 @@ public class DetailActivity extends Activity {
 			
 		});
 		
-		TextView tv = (TextView) findViewById(R.id.detailTitle);
+		TextView tv = (TextView) findViewById(com.barview.R.id.detailTitle);
 		tv.setText(barName);
 		
 //		BarImageFetcher bif = new BarImageFetcher();
@@ -205,10 +213,15 @@ public class DetailActivity extends Activity {
 			long end = System.currentTimeMillis();
 			Log.i(BarImageFetcher.class.getName(), "Bar image decoding took " + (end-start)/1000.0 + " seconds.");
 			
-			imageView = (ImageView) findViewById(R.id.detailImage);
+			imageView = (ImageView) findViewById(com.barview.R.id.detailImage);
 			imageView.setImageDrawable(Drawable.createFromStream(is, ""));
 			
-			
+			if(latch != null)
+				latch.countDown();
 		}
+	}
+
+	public void setLatch(CountDownLatch latch) {
+		this.latch = latch;
 	}
 }

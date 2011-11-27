@@ -21,6 +21,7 @@ import com.barview.constants.BarviewConstants;
 import com.barview.mobile.BarviewMobileLoginTask;
 import com.barview.mobile.BarviewMobileUser;
 import com.barview.mobile.BarviewMobileUtility;
+import com.barview.rest.FavoritesListUpdater;
 import com.barview.utilities.FacebookUtility;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
@@ -101,6 +102,9 @@ public class FacebookActivity extends Activity {
 							.putString(FacebookUtility.FB_LAST_NAME, FacebookUtility.getAttribute(FacebookUtility.FB_LAST_NAME));
 							
 							editor.commit();
+							
+							FavoritesListUpdater updater = new FavoritesListUpdater();
+							updater.execute("");
 			            }
 	
 			            public void onFacebookError(FacebookError error) {
@@ -162,6 +166,7 @@ public class FacebookActivity extends Activity {
 		                    	BarviewMobileLoginTask login = new BarviewMobileLoginTask();
 		                    	login.setActivity(activity);
 		                    	login.execute(BarviewConstants.BARVIEW_LOGIN, username.getText().toString(), password.getText().toString());
+		                    	
 		                    }
 		                })
 		                .create();

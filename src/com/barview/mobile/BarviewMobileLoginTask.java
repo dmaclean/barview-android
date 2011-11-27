@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.barview.FacebookActivity;
 import com.barview.R;
 import com.barview.constants.BarviewConstants;
+import com.barview.rest.FavoritesListUpdater;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
 import com.barview.utilities.BarviewUtilities;
@@ -138,6 +139,9 @@ public class BarviewMobileLoginTask extends AsyncTask<String, Integer, String> {
 				
 				Button bvLogonButton = (Button) activity.findViewById(R.id.bvlogin);
 				bvLogonButton.setText(R.string.bv_logout);
+				
+				FavoritesListUpdater updater = new FavoritesListUpdater();
+    			updater.execute("");
 			}
 			/*
 			 * Unable to log in.

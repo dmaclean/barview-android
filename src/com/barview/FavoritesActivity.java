@@ -2,6 +2,7 @@ package com.barview;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -27,6 +28,7 @@ import com.barview.constants.BarviewConstants;
 import com.barview.listeners.FavoriteDelete2OnClickListener;
 import com.barview.mobile.BarviewMobileUtility;
 import com.barview.models.Favorite;
+import com.barview.rest.FavoritesListUpdater;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
 import com.barview.utilities.BarviewUtilities;
@@ -38,14 +40,26 @@ public class FavoritesActivity extends ListActivity {
 	static ArrayList<Favorite> favorites;
 	
 	private static ArrayList<String> barIds;
+	private static boolean barsLoaded;
 	
 	FavoritesActivity favoritesClass = this;
 	
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
+	/*
+	 * Static initializer for the favorites and barIds ArrayLists.  The initialization
+	 * is necessary here because isFavorite() can be called statically, which means that
+	 * if a user goes directly to an Activity that calls this (Map Lookup) before going
+	 * into the FavoritesActivity (where they would normally be initialized in onCreate()
+	 * then the array would be null and a NullPointerException would result.
+	 */
+	static {
 		favorites = new ArrayList<Favorite>();
 		barIds = new ArrayList<String>();
+		
+		barsLoaded = false;
+	}
+	
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		
 		ListView lv = (ListView) getListView();
 		lv.setTextFilterEnabled(true);
@@ -106,6 +120,17 @@ public class FavoritesActivity extends ListActivity {
 		favorites = f;
 	}
 	
+	public static void setBarIds(ArrayList<String> b) {
+		barIds = b;
+	}
+	
+	/**
+	 * Determine if a bar is a favorite of the user.  This method should only be called
+	 * in situations where the user is logged in.
+	 * 
+	 * @param barId
+	 * @return
+	 */
 	public static boolean isFavorite(String barId) {
 		return barIds.contains(barId);
 	}
@@ -169,7 +194,7 @@ public class FavoritesActivity extends ListActivity {
 		
 		protected void onPostExecute(String result) {
 			if(result.equals("Not logged in")) {
-				Toast toast = Toast.makeText(favoritesClass, R.string.toast_notLoggedIn, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(favoritesClass, com.barview.R.string.toast_notLoggedIn, Toast.LENGTH_LONG);
 				toast.show();
 			}
 			
@@ -186,6 +211,7 @@ public class FavoritesActivity extends ListActivity {
 			}
 			
 			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
+			barsLoaded = true;
 		}
 	}
 }
