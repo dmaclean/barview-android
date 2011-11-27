@@ -15,6 +15,9 @@
     <!-- Details -->
     <string name="addToFaves">Add to Faves</string>
     
+    <!-- Deals -->
+    <string name="noDeals">No deals available right now.</string>
+    
     <!-- Facebook -->
     <string name="fb_login">Log in with Facebook</string>
     <string name="fb_logout">Log out of Facebook</string>
