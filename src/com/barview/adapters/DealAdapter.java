@@ -68,4 +68,8 @@ public class DealAdapter extends ArrayAdapter<Deal> {
 	public int getCount() {
 		return dealsMap.size();
 	}
+	
+	public LinkedHashMap<String, ArrayList<String>> getDealsMap() {
+		return dealsMap;
+	}
 }
