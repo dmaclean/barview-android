@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -100,6 +101,10 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 					else {
 						
 					}
+					
+					// hide virtual keyboard
+					InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		            imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
 				}
 				catch(Exception e) {
 					Log.e("MapLookupActivity", e.getMessage());
