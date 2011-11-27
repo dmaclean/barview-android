@@ -12,6 +12,7 @@ import org.xml.sax.XMLReader;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ import com.barview.constants.BarviewConstants;
 import com.barview.listeners.FavoriteDelete2OnClickListener;
 import com.barview.mobile.BarviewMobileUtility;
 import com.barview.models.Favorite;
-import com.barview.rest.FavoritesListUpdater;
 import com.barview.rest.RestClient;
 import com.barview.rest.RestClient.RequestMethod;
 import com.barview.utilities.BarviewUtilities;
@@ -43,6 +43,8 @@ public class FavoritesActivity extends ListActivity {
 	private static boolean barsLoaded;
 	
 	FavoritesActivity favoritesClass = this;
+	
+	CountDownLatch latch;
 	
 	/*
 	 * Static initializer for the favorites and barIds ArrayLists.  The initialization
@@ -148,6 +150,17 @@ public class FavoritesActivity extends ListActivity {
 
 		String response = "";
 		
+		ProgressDialog dialog;
+		
+		public FavoriteFetcher() {
+			dialog = new ProgressDialog(favoritesClass);
+		}
+		
+		protected void onPreExecute() {
+            this.dialog.setMessage("Retrieving your favorite bars.");
+            this.dialog.show();
+        }
+		
 		@Override
 		protected String doInBackground(String... params) {
 			// User isn't logged in.  Don't do anything.
@@ -210,8 +223,24 @@ public class FavoritesActivity extends ListActivity {
 				barIds.add(f.getBarId());
 			}
 			
-			setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
+			if(favorites.size() == 0) {
+				ArrayList<String> l = new ArrayList<String>();
+				l.add("You don't have any favorite bars.");
+				setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, l));
+			}
+			else
+				setListAdapter(new ArrayAdapter<String>(favoritesClass, R.layout.row, favesArray));
 			barsLoaded = true;
+			
+			if (dialog.isShowing())
+                dialog.dismiss();
+			
+			if(latch != null)
+				latch.countDown();
 		}
+	}
+	
+	public void setCountDownLatch(CountDownLatch latch) {
+		this.latch = latch;
 	}
 }
