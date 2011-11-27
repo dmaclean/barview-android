@@ -11,6 +11,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +78,17 @@ public class DealsActivity extends ListActivity {
 
 		String response = "";
 		
+		ProgressDialog dialog;
+		
+		public DealsFetcher() {
+			dialog = new ProgressDialog(dealsActivity);
+		}
+		
+		protected void onPreExecute() {
+            this.dialog.setMessage("");
+            this.dialog.show();
+        }
+		
 		@Override
 		protected String doInBackground(String... params) {
 			// User isn't logged in.  Don't do anything.
@@ -139,6 +151,9 @@ public class DealsActivity extends ListActivity {
 			// Need this check since the Latch is only created during unit testing!
 			if(l != null)
 				l.countDown();
+			
+			if(dialog.isShowing())
+				dialog.dismiss();
 		}
 	}
 	
