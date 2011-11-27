@@ -140,7 +140,7 @@ public class BarviewMobileLoginTask extends AsyncTask<String, Integer, String> {
 				Button bvLogonButton = (Button) activity.findViewById(R.id.bvlogin);
 				bvLogonButton.setText(R.string.bv_logout);
 				
-				FavoritesListUpdater updater = new FavoritesListUpdater();
+				FavoritesListUpdater updater = new FavoritesListUpdater(activity);
     			updater.execute("");
 			}
 			/*

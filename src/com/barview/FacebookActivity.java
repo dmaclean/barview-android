@@ -103,7 +103,7 @@ public class FacebookActivity extends Activity {
 							
 							editor.commit();
 							
-							FavoritesListUpdater updater = new FavoritesListUpdater();
+							FavoritesListUpdater updater = new FavoritesListUpdater(activity);
 							updater.execute("");
 			            }
 	

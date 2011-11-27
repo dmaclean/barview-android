@@ -10,13 +10,12 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.barview.FavoritesActivity;
-import com.barview.R;
 import com.barview.constants.BarviewConstants;
 import com.barview.mobile.BarviewMobileUtility;
 import com.barview.models.Favorite;
@@ -32,6 +31,17 @@ public class FavoritesListUpdater extends AsyncTask<String, Integer, String> {
 	ArrayList<Favorite> favorites;
 	
 	CountDownLatch latch;
+	
+	ProgressDialog dialog;
+	
+	public FavoritesListUpdater(Activity activity) {
+		dialog = new ProgressDialog(activity);
+	}
+	
+	protected void onPreExecute() {
+        this.dialog.setMessage("Retrieving your favorite bars.");
+        this.dialog.show();
+    }
 	
 	@Override
 	protected String doInBackground(String... params) {
@@ -93,6 +103,9 @@ public class FavoritesListUpdater extends AsyncTask<String, Integer, String> {
 		
 		if(latch != null)
 			latch.countDown();
+		
+		if (dialog.isShowing())
+            dialog.dismiss();
 	}
 	
 	public void setCountDownLatch(CountDownLatch latch) {
