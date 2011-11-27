@@ -42,7 +42,7 @@ public class FacebookUtility {
 	 */
 	public static Facebook getFacebook() {
 		if(facebook == null)
-			facebook = new Facebook(BarviewConstants.FACEBOOK_APP_ID_DEV);
+			facebook = new Facebook(getFacebookIdForRunMode());
 		
 		return facebook;
 	}
@@ -121,5 +121,14 @@ public class FacebookUtility {
 		return null;
 	}
 	
-	
+	public static String getFacebookIdForRunMode() {
+		if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEV_MODE))
+			return BarviewConstants.FACEBOOK_APP_ID_DEV;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEMO_MODE))
+			return BarviewConstants.FACEBOOK_APP_ID_DEMO;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.TEST_MODE))
+			return BarviewConstants.FACEBOOK_APP_ID_TEST;
+		else
+			return BarviewConstants.FACEBOOK_APP_ID_PROD;
+	}
 }

@@ -4,10 +4,13 @@ public class BarviewConstants {
 	public static final String LOCALHOST			= "10.0.2.2";
 	
 	public static final String FACEBOOK_APP_ID_DEV	= "177771455596726";
-	public static final String FACEBOOK_APP_ID		= "177771455596726";
+	public static final String FACEBOOK_APP_ID_DEMO	= "177771455596726";
+	public static final String FACEBOOK_APP_ID_TEST	= "177771455596726";
+	public static final String FACEBOOK_APP_ID_PROD	= "177771455596726";
 	
 	public static final String DEV_MODE				= "DEV";		// LOCALHOST
 	public static final String BVDEV_MODE			= "BVDEV";
+	public static final String TEST_MODE			= "TEST";
 	public static final String DEMO_MODE			= "DEMO";
 	public static final String PROD_MODE			= "PROD";
 	public static	    String RUN_MODE				= DEV_MODE;
@@ -29,6 +32,15 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL_BVDEV = "http://dev.bar-view.com/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL_BVDEV = "http://dev.bar-view.com/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL_BVDEV = "http://dev.bar-view.com/index.php?/rest/events";
+	
+	// TEST
+	public static final String FAVORITES_URL_TEST = "http://test.bar-view.com/index.php?/rest/favorites";
+	public static final String FAVORITE_URL_TEST = "http://test.bar-view.com/index.php?/rest/favorite";		// For POST and DELETE
+	public static final String BARIMAGES_URL_TEST = "http://test.bar-view.com/index.php?/rest/barimage";
+	public static final String NEARBYBARS_URL_TEST = "http://test.bar-view.com/index.php?/rest/nearbybars";
+	public static final String BARVIEWLOGIN_URL_TEST = "http://test.bar-view.com/index.php?/mobilelogin";
+	public static final String BARVIEWLOGOUT_URL_TEST = "http://test.bar-view.com/index.php?/mobilelogin/logout";
+	public static final String EVENTS_URL_TEST = "http://test.bar-view.com/index.php?/rest/events";
 	
 	// DEMO
 	public static final String FAVORITES_URL_DEMO = "http://demo.bar-view.com/index.php?/rest/favorites";
