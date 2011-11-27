@@ -130,6 +130,7 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 		
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
+		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000L, 50.0f, this);
 
 		// Make sure we have an old search to refocus to. 
 		if(lastSearch != null) {
