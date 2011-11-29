@@ -4,16 +4,16 @@ public class BarviewConstants {
 	public static final String LOCALHOST			= "10.0.2.2";
 	
 	public static final String FACEBOOK_APP_ID_DEV	= "177771455596726";
-	public static final String FACEBOOK_APP_ID_DEMO	= "177771455596726";
-	public static final String FACEBOOK_APP_ID_TEST	= "177771455596726";
-	public static final String FACEBOOK_APP_ID_PROD	= "177771455596726";
+	public static final String FACEBOOK_APP_ID_DEMO	= "261480677235705";
+	public static final String FACEBOOK_APP_ID_TEST	= "224918730913535";
+	public static final String FACEBOOK_APP_ID_PROD	= "187483778004162";
 	
 	public static final String DEV_MODE				= "DEV";		// LOCALHOST
 	public static final String BVDEV_MODE			= "BVDEV";
 	public static final String TEST_MODE			= "TEST";
 	public static final String DEMO_MODE			= "DEMO";
 	public static final String PROD_MODE			= "PROD";
-	public static	    String RUN_MODE				= DEV_MODE;
+	public static	    String RUN_MODE				= DEMO_MODE;
 	
 	// LOCALHOST
 	public static final String FAVORITES_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/favorites";
