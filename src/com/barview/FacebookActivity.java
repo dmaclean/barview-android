@@ -68,7 +68,9 @@ public class FacebookActivity extends Activity {
 						.remove(BarviewConstants.LOGIN_TYPE)
 						.remove(FacebookUtility.FB_FIRST_NAME)
 						.remove(FacebookUtility.FB_LAST_NAME)
-						.remove(FacebookUtility.FB_NAME);
+						.remove(FacebookUtility.FB_NAME)
+						.remove(FacebookUtility.FB_ACCESS_TOKEN)
+						.remove(FacebookUtility.FB_EXPIRES);
 						
 						editor.commit();
 					} catch (MalformedURLException e) {

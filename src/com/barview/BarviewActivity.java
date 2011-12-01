@@ -115,26 +115,6 @@ public class BarviewActivity extends Activity {
         	if(expires != 0)
         		fb.setAccessExpires(expires);
         	
-        	/*
-             * Only call authorize if the access_token has expired.
-             */
-            if(!fb.isSessionValid()) {
-
-                fb.authorize(this, new String[] {}, new DialogListener() {
-                    public void onComplete(Bundle values) {
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString(FacebookUtility.FB_ACCESS_TOKEN, fb.getAccessToken());
-                        editor.putLong(FacebookUtility.FB_EXPIRES, fb.getAccessExpires());
-                        editor.commit();
-                    }
-        
-                    public void onFacebookError(FacebookError error) {}
-        
-                    public void onError(DialogError e) {}
-        
-                    public void onCancel() {}
-                });
-            }
         	
         	String fbId = FacebookUtility.getAttribute(FacebookUtility.FB_ID);
         	Log.i(BarviewActivity.class.getName(), "Refreshed attributes for Facebook user " + fbId);
