@@ -85,7 +85,7 @@ public class DealsActivity extends ListActivity {
 		}
 		
 		protected void onPreExecute() {
-            this.dialog.setMessage("");
+            this.dialog.setMessage("Retrieving deals from your favorite bars...");
             this.dialog.show();
         }
 		
