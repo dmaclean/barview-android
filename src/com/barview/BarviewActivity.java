@@ -19,10 +19,7 @@ import com.barview.constants.BarviewConstants;
 import com.barview.mobile.BarviewMobileUser;
 import com.barview.mobile.BarviewMobileUtility;
 import com.barview.utilities.FacebookUtility;
-import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.facebook.android.Facebook.DialogListener;
 
 public class BarviewActivity extends Activity {
 	
