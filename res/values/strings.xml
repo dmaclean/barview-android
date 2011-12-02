@@ -7,6 +7,7 @@
     <string name="favoritesTitle">Favorites</string>
     <string name="deleteButton">Delete</string>
     <string name="toast_notLoggedIn">Please log in to have access to your favorite bars.</string>
+    <string name="toast_timeout">Unable to retrieve your favorites at the moment.  Please try again later.</string>
     
     <!-- Bar Lookup -->
     <string name="searchButton">Search</string>

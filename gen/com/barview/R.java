@@ -54,30 +54,31 @@ public final class R {
     public static final class string {
         /**  Details 
          */
-        public static final int addToFaves=0x7f040007;
+        public static final int addToFaves=0x7f040008;
         public static final int app_name=0x7f040001;
-        public static final int bv_login=0x7f04000b;
-        public static final int bv_login_button=0x7f040010;
-        public static final int bv_login_passtext=0x7f04000f;
-        public static final int bv_login_title=0x7f04000d;
-        public static final int bv_login_usertext=0x7f04000e;
-        public static final int bv_logout=0x7f04000c;
+        public static final int bv_login=0x7f04000c;
+        public static final int bv_login_button=0x7f040011;
+        public static final int bv_login_passtext=0x7f040010;
+        public static final int bv_login_title=0x7f04000e;
+        public static final int bv_login_usertext=0x7f04000f;
+        public static final int bv_logout=0x7f04000d;
         public static final int deleteButton=0x7f040003;
         /**  Favorites 
          */
         public static final int favoritesTitle=0x7f040002;
         /**  Facebook 
          */
-        public static final int fb_login=0x7f040009;
-        public static final int fb_logout=0x7f04000a;
-        public static final int goToImage=0x7f040006;
+        public static final int fb_login=0x7f04000a;
+        public static final int fb_logout=0x7f04000b;
+        public static final int goToImage=0x7f040007;
         public static final int hello=0x7f040000;
         /**  Deals 
          */
-        public static final int noDeals=0x7f040008;
+        public static final int noDeals=0x7f040009;
         /**  Bar Lookup 
          */
-        public static final int searchButton=0x7f040005;
+        public static final int searchButton=0x7f040006;
         public static final int toast_notLoggedIn=0x7f040004;
+        public static final int toast_timeout=0x7f040005;
     }
 }

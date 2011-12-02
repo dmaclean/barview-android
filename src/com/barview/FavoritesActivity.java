@@ -37,6 +37,9 @@ import com.barview.xml.XMLHandler;
 
 public class FavoritesActivity extends ListActivity {
 	
+	private static final String NOT_LOGGED_IN	= "Not logged in";
+	private static final String TIMEOUT			= "timeout";
+	
 	static ArrayList<Favorite> favorites;
 	
 	private static ArrayList<String> barIds;
@@ -126,6 +129,10 @@ public class FavoritesActivity extends ListActivity {
 		barIds = b;
 	}
 	
+	public static ArrayList<String> getBarIds() {
+		return barIds;
+	}
+	
 	/**
 	 * Determine if a bar is a favorite of the user.  This method should only be called
 	 * in situations where the user is logged in.
@@ -163,9 +170,9 @@ public class FavoritesActivity extends ListActivity {
 		
 		@Override
 		protected String doInBackground(String... params) {
-			// User isn't logged in.  Don't do anything.
+			// User isn't logged in.  Don't do anything (I don't even think we can get here).
 			if(!FacebookUtility.isLoggedIn() && !BarviewMobileUtility.isLoggedIn())
-				return "Not logged in";
+				return NOT_LOGGED_IN;
 			
 			RestClient client = new RestClient(BarviewUtilities.getFavoritesURLForRunMode());
 			if(FacebookUtility.isLoggedIn())
@@ -178,6 +185,7 @@ public class FavoritesActivity extends ListActivity {
 				response = client.getResponse();
 			} catch (Exception e) {
 				e.printStackTrace();
+				return TIMEOUT;
 			}
 			
 			try {
@@ -206,8 +214,12 @@ public class FavoritesActivity extends ListActivity {
 		}
 		
 		protected void onPostExecute(String result) {
-			if(result.equals("Not logged in")) {
+			if(result.equals(NOT_LOGGED_IN)) {
 				Toast toast = Toast.makeText(favoritesClass, com.barview.R.string.toast_notLoggedIn, Toast.LENGTH_LONG);
+				toast.show();
+			}
+			else if(result.equals(TIMEOUT)) {
+				Toast toast = Toast.makeText(favoritesClass, com.barview.R.string.toast_timeout, Toast.LENGTH_LONG);
 				toast.show();
 			}
 			
