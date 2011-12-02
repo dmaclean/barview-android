@@ -2,10 +2,11 @@ package com.barview;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-import android.R;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -99,22 +100,38 @@ public class DetailActivity extends Activity {
 
 			public void onClick(View v) {
 				RestClient client = new RestClient(BarviewUtilities.getFavoriteURLForRunMode() + "/" + barId);
-				client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
+				if(FacebookUtility.isLoggedIn())
+					client.AddHeader(BarviewConstants.REST_USER_ID, FacebookUtility.getRESTUserId());
+				else if(BarviewMobileUtility.isLoggedIn())
+					client.AddHeader(BarviewConstants.REST_USER_ID, BarviewMobileUtility.getUser().getUserId());
 				
 				try {
+					ProgressDialog dialog = new ProgressDialog(me);
+					dialog.setMessage("Adding " + barName + " to your favorites...");
+					
 					client.Execute(RequestMethod.POST);
 					String response = client.getResponse();
+					
+					if(dialog.isShowing())
+						dialog.dismiss();
 					
 					/*
 					 * The POST call for the favorites service should return an empty response to
 					 * us indicating success.  If we get something back in the response (HTML for
 					 * a PHP error) then we know the call failed.  Either way, we will fill in the
 					 * Toast accordingly based on the response.
+					 * 
+					 * For successful calls we will also update the Bar Ids list in FavoritesActivity.
+					 * This will prevent the "Add to Favorites" button from showing up if we exit
+					 * the Details screen and go right back in.
 					 */
 					Toast toast;
 					if(!response.equals(""))
 						toast = Toast.makeText(me, "Unable to add " + barName + " to favorites.  Please try again later.", Toast.LENGTH_SHORT);
 					else {
+						ArrayList<String> barIds = FavoritesActivity.getBarIds();
+						barIds.add(barId);
+						
 						favesButton.setVisibility(View.INVISIBLE);
 						toast = Toast.makeText(me, "Added " + barName + " to favorites!", Toast.LENGTH_SHORT);
 					}
