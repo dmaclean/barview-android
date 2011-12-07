@@ -21,6 +21,7 @@ import com.barview.constants.BarviewConstants;
 import com.barview.mobile.BarviewMobileLoginTask;
 import com.barview.mobile.BarviewMobileUser;
 import com.barview.mobile.BarviewMobileUtility;
+import com.barview.rest.FacebookDataUpdater;
 import com.barview.rest.FavoritesListUpdater;
 import com.barview.utilities.FacebookUtility;
 import com.facebook.android.DialogError;
@@ -85,7 +86,7 @@ public class FacebookActivity extends Activity {
 				 * change the button text to "Log out".
 				 */
 				else {
-					facebook.authorize(activity, new DialogListener() {
+					facebook.authorize(activity, new String[] { "email", "user_birthday", "user_location" }, new DialogListener() {
 			            public void onComplete(Bundle values) {
 			            	Log.i(FacebookActivity.class.getName(), "Logged into Facebook and got user id of " + 
 			            			FacebookUtility.getAttribute(FacebookUtility.FB_ID));
@@ -107,6 +108,9 @@ public class FacebookActivity extends Activity {
 							
 							FavoritesListUpdater updater = new FavoritesListUpdater(activity);
 							updater.execute("");
+							
+							FacebookDataUpdater fbUpdater = new FacebookDataUpdater();
+							fbUpdater.execute("");
 			            }
 	
 			            public void onFacebookError(FacebookError error) {

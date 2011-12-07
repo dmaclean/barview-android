@@ -114,4 +114,15 @@ public class BarviewUtilities {
 		
 		return BarviewConstants.EVENTS_URL;
 	}
+	
+	public static String getFacebookUpdateURLForRunMode() {
+		if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEV_MODE))
+			return BarviewConstants.FBUPDATE_URL_DEV;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.BVDEV_MODE))
+			return BarviewConstants.FBUPDATE_URL_BVDEV;
+		else if(BarviewConstants.RUN_MODE.equals(BarviewConstants.DEMO_MODE))
+			return BarviewConstants.FBUPDATE_URL_DEMO;
+		
+		return BarviewConstants.FBUPDATE_URL;
+	}
 }

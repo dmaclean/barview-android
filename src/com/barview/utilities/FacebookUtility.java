@@ -25,6 +25,10 @@ public class FacebookUtility {
 	public static final String FB_NAME			= "name";
 	public static final String FB_FIRST_NAME	= "first_name";
 	public static final String FB_LAST_NAME		= "last_name";
+	public static final String FB_BIRTHDAY		= "birthday";
+	public static final String FB_EMAIL			= "email";
+	public static final String FB_GENDER		= "gender";
+	public static final String FB_LOCATION		= "location";
 	
 	/**
 	 * Singleton instance of the Facebook object.
@@ -45,6 +49,10 @@ public class FacebookUtility {
 			facebook = new Facebook(getFacebookIdForRunMode());
 		
 		return facebook;
+	}
+	
+	public static JSONObject getJSON() {
+		return json;
 	}
 	
 	/**

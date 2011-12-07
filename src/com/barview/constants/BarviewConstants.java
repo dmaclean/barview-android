@@ -23,6 +23,7 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/events";
+	public static final String FBUPDATE_URL_DEV = "http://" + LOCALHOST + ":8888/barview/index.php?/rest/fbupdate";
 	
 	// DEV
 	public static final String FAVORITES_URL_BVDEV = "http://dev.bar-view.com/index.php?/rest/favorites";
@@ -32,6 +33,7 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL_BVDEV = "http://dev.bar-view.com/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL_BVDEV = "http://dev.bar-view.com/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL_BVDEV = "http://dev.bar-view.com/index.php?/rest/events";
+	public static final String FBUPDATE_URL_BVDEV = "http://dev.bar-view.com/index.php?/rest/fbupdate";
 	
 	// TEST
 	public static final String FAVORITES_URL_TEST = "http://test.bar-view.com/index.php?/rest/favorites";
@@ -41,6 +43,7 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL_TEST = "http://test.bar-view.com/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL_TEST = "http://test.bar-view.com/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL_TEST = "http://test.bar-view.com/index.php?/rest/events";
+	public static final String FBUPDATE_URL_TEST = "http://test.bar-view.com/index.php?/rest/fbupdate";
 	
 	// DEMO
 	public static final String FAVORITES_URL_DEMO = "http://demo.bar-view.com/index.php?/rest/favorites";
@@ -50,6 +53,7 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL_DEMO = "http://demo.bar-view.com/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL_DEMO = "http://demo.bar-view.com/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL_DEMO = "http://demo.bar-view.com/index.php?/rest/events";
+	public static final String FBUPDATE_URL_DEMO = "http://demo.bar-view.com/index.php?/rest/fbupdate";
 	
 	// PROD
 	public static final String FAVORITES_URL = "http://bar-view.com/index.php?/rest/favorites";
@@ -59,6 +63,7 @@ public class BarviewConstants {
 	public static final String BARVIEWLOGIN_URL = "http://bar-view.com/index.php?/mobilelogin";
 	public static final String BARVIEWLOGOUT_URL = "http://bar-view.com/index.php?/mobilelogin/logout";
 	public static final String EVENTS_URL = "http://bar-view.com/index.php?/rest/events";
+	public static final String FBUPDATE_URL = "http://bar-view.com/index.php?/rest/fbupdate";
 	
 	// Favorite constants for the XML
 	public static final String FAVORITE_AGGREGATE	= "favorite";
