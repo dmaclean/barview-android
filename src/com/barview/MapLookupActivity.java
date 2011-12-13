@@ -113,11 +113,8 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 			}
 		});
 		
-//		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-//		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
-//		
-        mapController = mapView.getController();
-        mapController.setZoom(10);
+		mapController = mapView.getController();
+        mapController.setZoom(14);
 	}
 	
 	/**
@@ -158,9 +155,9 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 
 	public void onLocationChanged(Location location) {
 		if (location != null && !foundLocation) {
-			double lat = location.getLatitude();
-			double lng = location.getLongitude();
-			GeoPoint p = new GeoPoint((int) lat * 1000000, (int) lng * 1000000);
+			int lat = (int) (location.getLatitude() * BarviewConstants.GEOPOINT_MULT);
+			int lng = (int) (location.getLongitude() * BarviewConstants.GEOPOINT_MULT);
+			GeoPoint p = new GeoPoint(lat, lng);
 			mapController.animateTo(p);
 			
 			foundLocation = true;
