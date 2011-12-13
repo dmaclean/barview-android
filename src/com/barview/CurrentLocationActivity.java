@@ -44,6 +44,7 @@ public class CurrentLocationActivity extends MapActivity implements LocationList
 		// Set up the Location Manager
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 50.0f, this);
+		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000L, 50.0f, this);
 		
 		// Grab our last known location, but only if it exists.
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
