@@ -57,20 +57,25 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 	
 	static ArrayList<Bar> bars;
 	
-	private boolean foundLocation = false;
+	private static boolean foundLocation = false;
 	
 	/**
 	 * The last point that the user successfully searched for.  We want to save this
 	 * because if after searching for a location the user moves to the Current Location
 	 * tab then they'll lose their place if moving back to this tab.
 	 */
-	private GeoPoint lastSearch;
+	static GeoPoint lastSearch;
+	
+	/**
+	 * A collection of the map overlays that were visible from the most recent search.  We
+	 * need to save these in case the user rotates their phone, which will cause onCreate()
+	 * and onResume() to be called again.
+	 */
+	static ArrayList<CustomItemizedOverlay> lastOverlays = new ArrayList<CustomItemizedOverlay>();
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.barlookup);
-		
-		lastSearch = null;
 		
 		bars = new ArrayList<Bar>();
 		
@@ -131,6 +136,12 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 
 		// Make sure we have an old search to refocus to. 
 		if(lastSearch != null) {
+			List<Overlay> l = mapView.getOverlays();
+			for(CustomItemizedOverlay o : lastOverlays) {
+				o.setContext(me);
+				l.add(o);
+			}
+			
 			mapController.animateTo(lastSearch);
 			mapController.setZoom(14);
 		}
@@ -250,6 +261,10 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 		protected void onPostExecute(String result) {
 			List<Overlay> mapOverlays = mapView.getOverlays();
 			
+			// Clear out our existing list of overlays that are cached in case of
+			// phone reorientation.
+			lastOverlays.clear();
+			
 			for(Bar b : bars) {
 				Log.i(MapLookupActivity.class.getName(), b.getName());
 				
@@ -266,6 +281,7 @@ public class MapLookupActivity extends MapActivity implements LocationListener {
 		        
 		        itemizedOverlay.addOverlay(overlayitem);
 		        mapOverlays.add(itemizedOverlay);
+		        lastOverlays.add(itemizedOverlay);
 			}
 			
 			GeoPoint p = new GeoPoint(	(int) (lat * BarviewConstants.GEOPOINT_MULT), 

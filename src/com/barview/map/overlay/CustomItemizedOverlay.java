@@ -89,4 +89,8 @@ public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	public void setBarId(String barId) {
 		this.barId = barId;
 	}
+	
+	public void setContext(Context context) {
+		this.context = context;
+	}
 }
